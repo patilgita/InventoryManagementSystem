@@ -1,7 +1,6 @@
 package com.InventoryManagementSystem.ServiceImpl;
 
 import com.InventoryManagementSystem.Entity.Order;
-import com.InventoryManagementSystem.Entity.OrderItem;
 import com.InventoryManagementSystem.Repository.OrderRepository;
 import com.InventoryManagementSystem.Service.OrderService;
 import org.springframework.stereotype.Service;
@@ -19,10 +18,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOrder(Order order) {
-        // calculate total before saving
-        double total = calculateTotal(order.getOrderItems());
-        order.setTotalAmount(total);
-
+        // direct save (no order items logic)
         return orderRepository.save(order);
     }
 
@@ -45,15 +41,10 @@ public class OrderServiceImpl implements OrderService {
             existing.setOrderTime(order.getOrderTime());
             existing.setStatus(order.getStatus());
             existing.setUser(order.getUser());
-
-            double total = calculateTotal(order.getOrderItems());
-            existing.setTotalAmount(total);
-
-            existing.setOrderItems(order.getOrderItems());
+            existing.setTotalAmount(order.getTotalAmount());
 
             return orderRepository.save(existing);
         }
-
         return null;
     }
 
@@ -63,25 +54,5 @@ public class OrderServiceImpl implements OrderService {
         if (existing != null) {
             orderRepository.delete(existing);
         }
-    }
-
-    // Discount + Subtotal Logic (GST removed)
-    private double calculateTotal(List<OrderItem> items) {
-        double total = 0;
-
-        if (items != null) {
-            for (OrderItem item : items) {
-                double itemTotal = item.getUnitPrice() * item.getQuantity();
-
-                // Apply discount
-                itemTotal -= item.getDiscount();
-
-                // set subtotal per item
-                item.setSubtotal(itemTotal);
-
-                total += itemTotal;
-            }
-        }
-        return total;
     }
 }

@@ -19,12 +19,19 @@ public class ShipmentServiceImpl implements ShipmentService {
 
     @Override
     public Shipment createShipment(Shipment shipment) {
+
+        // 🔥 Fetch customer mobile & address from Order -> User
+        if (shipment.getOrder() != null && shipment.getOrder().getUser() != null) {
+            shipment.setCustomerMobile(shipment.getOrder().getUser().getPhone());
+            shipment.setCustomerAddress(shipment.getOrder().getUser().getAddress());
+        }
+
+        // trackingId will be auto-generated (S1, S2) via @PostPersist
         return shipmentRepository.save(shipment);
     }
 
     @Override
     public Shipment getShipmentById(Long id) {
-        // Return null if shipment not found
         Optional<Shipment> shipment = shipmentRepository.findById(id);
         return shipment.orElse(null);
     }
@@ -41,16 +48,23 @@ public class ShipmentServiceImpl implements ShipmentService {
         if (existingShipment.isPresent()) {
             Shipment existing = existingShipment.get();
 
-            // Update fields here (example fields)
             existing.setShipmentName(shipment.getShipmentName());
             existing.setShipmentDate(shipment.getShipmentDate());
-            existing.setDestination(shipment.getDestination());
+            existing.setShipmentAddress(shipment.getShipmentAddress()); // renamed
             existing.setStatus(shipment.getStatus());
+            existing.setSentByVendorName(shipment.getSentByVendorName());
+
+            // update customer details again if order present
+            if (shipment.getOrder() != null && shipment.getOrder().getUser() != null) {
+                existing.setCustomerMobile(shipment.getOrder().getUser().getPhone());
+                existing.setCustomerAddress(shipment.getOrder().getUser().getAddress());
+            }
+
+            existing.setOrder(shipment.getOrder());
 
             return shipmentRepository.save(existing);
         }
 
-        // Return null if shipment doesn't exist
         return null;
     }
 

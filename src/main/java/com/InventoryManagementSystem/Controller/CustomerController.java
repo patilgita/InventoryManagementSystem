@@ -1,7 +1,7 @@
 package com.InventoryManagementSystem.Controller;
 
-import com.InventoryManagementSystem.Entity.User;
-import com.InventoryManagementSystem.Service.UserService;
+import com.InventoryManagementSystem.Entity.Customer;
+import com.InventoryManagementSystem.Service.CustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,36 +9,36 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class CustomerController {
 
-    private final UserService userService;
+    private final CustomerService userService;
 
-    public UserController(UserService userService) {
+    public CustomerController(CustomerService userService) {
         this.userService = userService;
     }
 
     // CREATE USER
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<Customer> createUser(@RequestBody Customer user) {
         return ResponseEntity.ok(userService.createUser(user));
     }
 
     // GET USER BY ID
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<Customer> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     // GET ALL USERS
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<Customer>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     // UPDATE USER
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id,
-                                           @RequestBody User user) {
+    public ResponseEntity<Customer> updateUser(@PathVariable Long id,
+                                               @RequestBody Customer user) {
         return ResponseEntity.ok(userService.updateUser(id, user));
     }
 

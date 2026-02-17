@@ -1,15 +1,13 @@
 package com.InventoryManagementSystem.Controller;
 
 import com.InventoryManagementSystem.Entity.Order;
-import com.InventoryManagementSystem.Entity.OrderItem;
 import com.InventoryManagementSystem.Service.OrderService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("orders")
 public class OrderController {
 
     private final OrderService orderService;
@@ -18,52 +16,33 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    // CREATE ORDER
-    @PostMapping("/create")
-    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-
-        if (order.getOrderItems() != null) {
-            for (OrderItem item : order.getOrderItems()) {
-                item.setOrder(order);   // IMPORTANT LINK
-            }
-        }
-
-        Order savedOrder = orderService.createOrder(order);
-        return ResponseEntity.ok(savedOrder);
+    // Create Order
+    @PostMapping
+    public Order createOrder(@RequestBody Order order) {
+        return orderService.createOrder(order);
     }
 
-    // GET ORDER BY ID
-    @GetMapping("/getbyid/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
-        Order order = orderService.getOrderById(id);
-        return ResponseEntity.ok(order);
+    // Get Order by Id
+    @GetMapping("/{id}")
+    public Order getOrderById(@PathVariable Long id) {
+        return orderService.getOrderById(id);
     }
 
-    // GET ALL ORDERS
-    @GetMapping("/getAll")
-    public ResponseEntity<List<Order>> getAllOrders() {
-        return ResponseEntity.ok(orderService.getAllOrders());
+    // Get All Orders
+    @GetMapping
+    public List<Order> getAllOrders() {
+        return orderService.getAllOrders();
     }
 
-    // UPDATE ORDER
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long id,
-                                             @RequestBody Order order) {
-
-        if (order.getOrderItems() != null) {
-            for (OrderItem item : order.getOrderItems()) {
-                item.setOrder(order);
-            }
-        }
-
-        Order updatedOrder = orderService.updateOrder(id, order);
-        return ResponseEntity.ok(updatedOrder);
+    // Update Order
+    @PutMapping("/{id}")
+    public Order updateOrder(@PathVariable Long id, @RequestBody Order order) {
+        return orderService.updateOrder(id, order);
     }
 
-    // DELETE ORDER
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteOrder(@PathVariable Long id) {
+    // Delete Order
+    @DeleteMapping("/{id}")
+    public void deleteOrder(@PathVariable Long id) {
         orderService.deleteOrder(id);
-        return ResponseEntity.ok("Order deleted successfully");
     }
 }

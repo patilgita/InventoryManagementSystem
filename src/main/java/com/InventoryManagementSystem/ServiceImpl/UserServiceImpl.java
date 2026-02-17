@@ -1,64 +1,63 @@
 package com.InventoryManagementSystem.ServiceImpl;
 
-import com.InventoryManagementSystem.Entity.User;
-import com.InventoryManagementSystem.Repository.UserRepository;
-import com.InventoryManagementSystem.Service.UserService;
+import com.InventoryManagementSystem.Entity.Customer;
+import com.InventoryManagementSystem.Repository.CustomerRepository;
+import com.InventoryManagementSystem.Service.CustomerService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements CustomerService {
 
-    private final UserRepository userRepository;
+    private final CustomerRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(CustomerRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
-    public User createUser(User user) {
+    public Customer createUser(Customer user) {
         return userRepository.save(user);
     }
 
     @Override
-    public User getUserById(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        return user.orElse(null); // Return null if not found
+    public Customer getUserById(Long id) {
+        Optional<Customer> user = userRepository.findById(id);
+        return user.orElse(null);
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<Customer> getAllUsers() {
         return userRepository.findAll();
     }
 
     @Override
-    public User updateUser(Long id, User user) {
-        Optional<User> existingUser = userRepository.findById(id);
+    public Customer updateUser(Long id, Customer user) {
+        Optional<Customer> existingUser = userRepository.findById(id);
 
         if (existingUser.isPresent()) {
-            User existing = existingUser.get();
+            Customer existing = existingUser.get();
 
-            // Update fields
             existing.setName(user.getName());
             existing.setEmail(user.getEmail());
             existing.setPhone(user.getPhone());
             existing.setAddress(user.getAddress());
             existing.setCity(user.getCity());
-            existing.setDistrict(user.getDistrict());
             existing.setState(user.getState());
             existing.setPincode(user.getPincode());
+            existing.setGstNumber(user.getGstNumber()); // new field
 
             return userRepository.save(existing);
         }
 
-        return null; // Return null if user doesn't exist
+        return null;
     }
 
     @Override
     public void deleteUser(Long id) {
-        Optional<User> existingUser = userRepository.findById(id);
+        Optional<Customer> existingUser = userRepository.findById(id);
         existingUser.ifPresent(userRepository::delete);
     }
 }

@@ -1,11 +1,12 @@
 package com.InventoryManagementSystem.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,15 +20,18 @@ public class User {
     private String phone;
     private String address;
     private String city;
-    private String district;
     private String state;
     private String pincode;
 
-    // One User can place many Orders
+    @Column(name = "gst_number")
+    private String gstNumber;
+
+    // One User -> Many Orders
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Order> orders;
 
-    // ===== Getters and Setters =====
+    // ===== GETTERS & SETTERS =====
 
     public Long getId() {
         return id;
@@ -49,19 +53,19 @@ public class User {
         this.email = email;
     }
 
-    public String getPhone() {
+    public String getPhone() {   // ⭐ needed
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(String phone) {   // ⭐ needed
         this.phone = phone;
     }
 
-    public String getAddress() {
+    public String getAddress() {   // ⭐ needed
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(String address) {   // ⭐ needed
         this.address = address;
     }
 
@@ -71,14 +75,6 @@ public class User {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
     }
 
     public String getState() {
@@ -95,6 +91,14 @@ public class User {
 
     public void setPincode(String pincode) {
         this.pincode = pincode;
+    }
+
+    public String getGstNumber() {
+        return gstNumber;
+    }
+
+    public void setGstNumber(String gstNumber) {
+        this.gstNumber = gstNumber;
     }
 
     public List<Order> getOrders() {

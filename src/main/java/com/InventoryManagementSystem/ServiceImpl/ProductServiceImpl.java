@@ -17,23 +17,26 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository = productRepository;
     }
 
+    // CREATE PRODUCT
     @Override
     public Product createProduct(Product product) {
         return productRepository.save(product);
     }
 
+    // GET PRODUCT BY ID
     @Override
     public Product getProductById(Long id) {
-        // Return null if not found
         Optional<Product> product = productRepository.findById(id);
         return product.orElse(null);
     }
 
+    // GET ALL PRODUCTS
     @Override
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
+    // UPDATE PRODUCT
     @Override
     public Product updateProduct(Long id, Product product) {
         Optional<Product> existingProduct = productRepository.findById(id);
@@ -41,8 +44,12 @@ public class ProductServiceImpl implements ProductService {
         if (existingProduct.isPresent()) {
             Product existing = existingProduct.get();
 
-            // Update fields
+            existing.setProductCode(product.getProductCode());
             existing.setProductName(product.getProductName());
+            existing.setProductType(product.getProductType());
+            existing.setBrand(product.getBrand());
+            existing.setUnit(product.getUnit());
+            existing.setGstApplicable(product.isGstApplicable());
             existing.setPrice(product.getPrice());
             existing.setQuantity(product.getQuantity());
             existing.setDescription(product.getDescription());
@@ -50,14 +57,13 @@ public class ProductServiceImpl implements ProductService {
             return productRepository.save(existing);
         }
 
-        // Return null if product doesn't exist
         return null;
     }
 
+    // DELETE PRODUCT
     @Override
     public void deleteProduct(Long id) {
         Optional<Product> existingProduct = productRepository.findById(id);
         existingProduct.ifPresent(productRepository::delete);
     }
-
 }

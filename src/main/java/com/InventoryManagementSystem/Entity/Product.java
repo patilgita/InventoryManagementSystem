@@ -10,30 +10,61 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "product_name") // match DB column
+    @Column(name = "product_code", unique = true)
+    private String productCode;
+
+    @Column(name = "product_name")
     private String productName;
+
+    @Column(name = "product_type")
+    private String productType;
+
+    private String brand; // 🔥 NEW FIELD
+
+    private String unit; // pcs, box, etc.
+
+    @Column(name = "gst_applicable")
+    private boolean gstApplicable;
 
     private double price;
     private int quantity;
     private String description;
 
-    // Default constructor
     public Product() {}
 
-    // Constructor with fields
-    public Product(String productName, double price, int quantity, String description) {
+    public Product(String productCode, String productName, String productType,
+                   String brand, String unit, boolean gstApplicable,
+                   double price, int quantity, String description) {
+        this.productCode = productCode;
         this.productName = productName;
+        this.productType = productType;
+        this.brand = brand;
+        this.unit = unit;
+        this.gstApplicable = gstApplicable;
         this.price = price;
         this.quantity = quantity;
         this.description = description;
     }
 
-    // Getters and Setters
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+
+    public String getProductCode() { return productCode; }
+    public void setProductCode(String productCode) { this.productCode = productCode; }
 
     public String getProductName() { return productName; }
     public void setProductName(String productName) { this.productName = productName; }
+
+    public String getProductType() { return productType; }
+    public void setProductType(String productType) { this.productType = productType; }
+
+    public String getBrand() { return brand; }
+    public void setBrand(String brand) { this.brand = brand; }
+
+    public String getUnit() { return unit; }
+    public void setUnit(String unit) { this.unit = unit; }
+
+    public boolean isGstApplicable() { return gstApplicable; }
+    public void setGstApplicable(boolean gstApplicable) { this.gstApplicable = gstApplicable; }
 
     public double getPrice() { return price; }
     public void setPrice(double price) { this.price = price; }

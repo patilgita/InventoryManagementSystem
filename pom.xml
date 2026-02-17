@@ -46,7 +46,7 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- ✨ Lombok (NO VERSION NEEDED) -->
+		<!--  Lombok (NO VERSION NEEDED) -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -66,6 +66,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.30</version>
+			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>
