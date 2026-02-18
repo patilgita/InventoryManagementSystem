@@ -1,9 +1,10 @@
 package com.InventoryManagementSystem.Entity;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "vendors") // better table name
+@Table(name = "vendors")
 public class Vendor {
 
     @Id
@@ -11,31 +12,18 @@ public class Vendor {
     private Long id;
 
     private String name;
-
-    @Column(unique = true)
     private String email;
-
     private String phone;
     private String address;
     private String city;
     private String state;
     private String pincode;
 
-    // Default constructor
+    @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
+    private List<Product> products;
+
     public Vendor() {}
 
-    // Constructor with all fields (optional)
-    public Vendor(String name, String email, String phone, String address, String city, String state, String pincode) {
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.city = city;
-        this.state = state;
-        this.pincode = pincode;
-    }
-
-    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -59,4 +47,7 @@ public class Vendor {
 
     public String getPincode() { return pincode; }
     public void setPincode(String pincode) { this.pincode = pincode; }
+
+    public List<Product> getProducts() { return products; }
+    public void setProducts(List<Product> products) { this.products = products; }
 }

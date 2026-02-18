@@ -1,30 +1,70 @@
 package com.InventoryManagementSystem.ServiceImpl;
 
+import com.InventoryManagementSystem.Entity.Customer;
 import com.InventoryManagementSystem.Entity.Order;
+import com.InventoryManagementSystem.Entity.OrderItem;
+import com.InventoryManagementSystem.Entity.Product;
+import com.InventoryManagementSystem.Enum.OrderStatus;
+import com.InventoryManagementSystem.Repository.CustomerRepository;
 import com.InventoryManagementSystem.Repository.OrderRepository;
+import com.InventoryManagementSystem.Repository.ProductRepository;
 import com.InventoryManagementSystem.Service.OrderService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final CustomerRepository customerRepository;
+    private final ProductRepository productRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository,
+                            CustomerRepository customerRepository,
+                            ProductRepository productRepository) {
         this.orderRepository = orderRepository;
+        this.customerRepository = customerRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
     public Order createOrder(Order order) {
-        // direct save (no order items logic)
+        // Check if customer exists
+        Long customerId = order.getCustomer().getId();
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new RuntimeException("Customer not found with ID: " + customerId));
+        order.setCustomer(customer);
+
+        // Link OrderItems with Products and calculate totalPrice
+        if (order.getOrderItems() != null) {
+            for (OrderItem item : order.getOrderItems()) {
+                Long productId = item.getProduct().getId();
+                Product product = productRepository.findById(productId)
+                        .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));
+
+                item.setProduct(product);
+                item.setOrder(order);
+
+                // Calculate GST and total
+                double gstAmount = product.isGstApplicable() ? product.getPrice() * product.getGstPercentage() / 100 : 0;
+                double totalPrice = (product.getPrice() + gstAmount) * item.getQuantity();
+
+                item.setPrice(product.getPrice());
+                item.setGstAmount(gstAmount);
+                item.setTotalPrice(totalPrice);
+            }
+        }
+
         return orderRepository.save(order);
     }
 
     @Override
     public Order getOrderById(Long id) {
-        return orderRepository.findById(id).orElse(null);
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found with ID: " + id));
     }
 
     @Override
@@ -33,26 +73,23 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order updateOrder(Long id, Order order) {
-        Order existing = getOrderById(id);
+    public List<Order> getOrdersByCustomerId(Long customerId) {
+        return orderRepository.findByCustomerId(customerId);
+    }
 
-        if (existing != null) {
-            existing.setOrderDate(order.getOrderDate());
-            existing.setOrderTime(order.getOrderTime());
-            existing.setStatus(order.getStatus());
-            existing.setUser(order.getUser());
-            existing.setTotalAmount(order.getTotalAmount());
+    @Override
+    public Order updateOrderStatus(Long id, OrderStatus status) {
+        Order existing = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found with ID: " + id));
 
-            return orderRepository.save(existing);
-        }
-        return null;
+        existing.setStatus(status);
+        return orderRepository.save(existing);
     }
 
     @Override
     public void deleteOrder(Long id) {
-        Order existing = getOrderById(id);
-        if (existing != null) {
-            orderRepository.delete(existing);
-        }
+        Order existing = orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found with ID: " + id));
+        orderRepository.delete(existing);
     }
 }

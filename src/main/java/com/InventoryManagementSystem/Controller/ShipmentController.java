@@ -20,13 +20,15 @@ public class ShipmentController {
     // CREATE SHIPMENT
     @PostMapping
     public ResponseEntity<Shipment> createShipment(@RequestBody Shipment shipment) {
-        return ResponseEntity.ok(shipmentService.createShipment(shipment));
+        Shipment savedShipment = shipmentService.createShipment(shipment);
+        return ResponseEntity.ok(savedShipment);
     }
 
     // GET SHIPMENT BY ID
     @GetMapping("/{id}")
     public ResponseEntity<Shipment> getShipmentById(@PathVariable Long id) {
-        return ResponseEntity.ok(shipmentService.getShipmentById(id));
+        Shipment shipment = shipmentService.getShipmentById(id);
+        return ResponseEntity.ok(shipment);
     }
 
     // GET ALL SHIPMENTS
@@ -39,7 +41,8 @@ public class ShipmentController {
     @PutMapping("/{id}")
     public ResponseEntity<Shipment> updateShipment(@PathVariable Long id,
                                                    @RequestBody Shipment shipment) {
-        return ResponseEntity.ok(shipmentService.updateShipment(id, shipment));
+        Shipment updatedShipment = shipmentService.updateShipment(id, shipment);
+        return ResponseEntity.ok(updatedShipment);
     }
 
     // DELETE SHIPMENT

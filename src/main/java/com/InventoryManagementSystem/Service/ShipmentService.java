@@ -15,4 +15,5 @@ public interface ShipmentService {
     Shipment updateShipment(Long id, Shipment shipment);
 
     void deleteShipment(Long id);
+
 }

@@ -1,18 +1,17 @@
 package com.InventoryManagementSystem.Service;
 
 import com.InventoryManagementSystem.Entity.Customer;
-
 import java.util.List;
 
 public interface CustomerService {
 
-    Customer createUser(Customer user);
+    Customer createCustomer(Customer customer);
 
-    Customer getUserById(Long id);
+    Customer getCustomerById(Long id);
 
-    List<Customer> getAllUsers();
+    List<Customer> getAllCustomers();
 
-    Customer updateUser(Long id, Customer user);
+    Customer updateCustomer(Long id, Customer customer);
 
-    void deleteUser(Long id);
+    void deleteCustomer(Long id);
 }

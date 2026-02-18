@@ -1,8 +1,6 @@
 package com.InventoryManagementSystem.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-
 
 @Entity
 @Table(name = "order_items")
@@ -12,19 +10,21 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Many OrderItems -> One Order
     @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    @JsonBackReference
+    @JoinColumn(name = "order_id")
     private Order order;
 
+    // Many OrderItems -> One Product
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    private int quantity;
-    private double unitPrice;
-    private double discount;
-    private double subtotal;
+    private Integer quantity;
+
+    private double price;        // product price
+    private double gstAmount;    // calculated GST amount
+    private double totalPrice;   // final total (price + gst) * quantity
 
     public OrderItem() {}
 
@@ -36,15 +36,15 @@ public class OrderItem {
     public Product getProduct() { return product; }
     public void setProduct(Product product) { this.product = product; }
 
-    public int getQuantity() { return quantity; }
-    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public Integer getQuantity() { return quantity; }
+    public void setQuantity(Integer quantity) { this.quantity = quantity; }
 
-    public double getUnitPrice() { return unitPrice; }
-    public void setUnitPrice(double unitPrice) { this.unitPrice = unitPrice; }
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
 
-    public double getDiscount() { return discount; }
-    public void setDiscount(double discount) { this.discount = discount; }
+    public double getGstAmount() { return gstAmount; }
+    public void setGstAmount(double gstAmount) { this.gstAmount = gstAmount; }
 
-    public double getSubtotal() { return subtotal; }
-    public void setSubtotal(double subtotal) { this.subtotal = subtotal; }
+    public double getTotalPrice() { return totalPrice; }
+    public void setTotalPrice(double totalPrice) { this.totalPrice = totalPrice; }
 }

@@ -4,7 +4,7 @@ import com.InventoryManagementSystem.Enum.PaymentMethod;
 import com.InventoryManagementSystem.Enum.PaymentStatus;
 import jakarta.persistence.*;
 
-        import java.time.LocalDate;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "payments")
@@ -15,7 +15,6 @@ public class Payment {
     private Long id;
 
     private double amount;
-
     private LocalDate paymentDate;
 
     @Enumerated(EnumType.STRING)
@@ -24,58 +23,28 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
-    // One Payment belongs to one Order
-    @OneToOne
-    @JoinColumn(name = "order_id")
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    // Default Constructor
     public Payment() {
+        this.paymentDate = LocalDate.now();
     }
 
-    // ===== Getters and Setters =====
+    public Long getId() { return id; }
 
-    public Long getId() {
-        return id;
-    }
+    public double getAmount() { return amount; }
+    public void setAmount(double amount) { this.amount = amount; }
 
-    public double getAmount() {
-        return amount;
-    }
+    public LocalDate getPaymentDate() { return paymentDate; }
+    public void setPaymentDate(LocalDate paymentDate) { this.paymentDate = paymentDate; }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
+    public PaymentMethod getPaymentMethod() { return paymentMethod; }
+    public void setPaymentMethod(PaymentMethod paymentMethod) { this.paymentMethod = paymentMethod; }
 
-    public LocalDate getPaymentDate() {
-        return paymentDate;
-    }
+    public PaymentStatus getPaymentStatus() { return paymentStatus; }
+    public void setPaymentStatus(PaymentStatus paymentStatus) { this.paymentStatus = paymentStatus; }
 
-    public void setPaymentDate(LocalDate paymentDate) {
-        this.paymentDate = paymentDate;
-    }
-
-    public PaymentMethod getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(PaymentMethod paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-
-    public PaymentStatus getPaymentStatus() {
-        return paymentStatus;
-    }
-
-    public void setPaymentStatus(PaymentStatus paymentStatus) {
-        this.paymentStatus = paymentStatus;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
+    public Order getOrder() { return order; }
+    public void setOrder(Order order) { this.order = order; }
 }

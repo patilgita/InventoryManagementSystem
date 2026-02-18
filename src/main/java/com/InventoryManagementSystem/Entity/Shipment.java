@@ -4,62 +4,39 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "shipment")
+@Table(name = "shipments")
 public class Shipment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Auto tracking id like S1, S2
     @Column(name = "tracking_id", unique = true)
     private String trackingId;
 
     private String shipmentName;
     private LocalDate shipmentDate;
 
-    @Column(name = "shipment_address") // renamed from destination
+    @Column(name = "shipment_address")
     private String shipmentAddress;
 
-    private String status;
+    @Column(nullable = false)
+    private String status = "CREATED";
 
-    // Fetch from customer (User) table via Order
     private String customerMobile;
     private String customerAddress;
-
-    // Vendor who sent shipment
     private String sentByVendorName;
 
-    // 🔗 One Order -> One Shipment
-    @OneToOne
-    @JoinColumn(name = "order_id")
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
     public Shipment() {}
 
-    public Shipment(String shipmentName, LocalDate shipmentDate, String shipmentAddress,
-                    String status, String customerMobile, String customerAddress,
-                    String sentByVendorName, Order order) {
-        this.shipmentName = shipmentName;
-        this.shipmentDate = shipmentDate;
-        this.shipmentAddress = shipmentAddress;
-        this.status = status;
-        this.customerMobile = customerMobile;
-        this.customerAddress = customerAddress;
-        this.sentByVendorName = sentByVendorName;
-        this.order = order;
-    }
-
-    // Auto-generate tracking id like S1, S2
-    @PostPersist
-    public void generateTrackingId() {
-        this.trackingId = "S" + this.id;
-    }
-
-    // Getters & Setters
     public Long getId() { return id; }
 
     public String getTrackingId() { return trackingId; }
+    public void setTrackingId(String trackingId) { this.trackingId = trackingId; }
 
     public String getShipmentName() { return shipmentName; }
     public void setShipmentName(String shipmentName) { this.shipmentName = shipmentName; }

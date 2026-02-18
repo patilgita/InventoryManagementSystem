@@ -1,13 +1,15 @@
 package com.InventoryManagementSystem.Controller;
 
 import com.InventoryManagementSystem.Entity.Order;
+import com.InventoryManagementSystem.Enum.OrderStatus;
 import com.InventoryManagementSystem.Service.OrderService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("orders")
+@RequestMapping("/orders") // added leading slash
 public class OrderController {
 
     private final OrderService orderService;
@@ -16,33 +18,41 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    // Create Order
+    // CREATE ORDER
     @PostMapping
-    public Order createOrder(@RequestBody Order order) {
-        return orderService.createOrder(order);
+    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+        return ResponseEntity.ok(orderService.createOrder(order));
     }
 
-    // Get Order by Id
+    // GET ORDER BY ID
     @GetMapping("/{id}")
-    public Order getOrderById(@PathVariable Long id) {
-        return orderService.getOrderById(id);
+    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
+        return ResponseEntity.ok(orderService.getOrderById(id));
     }
 
-    // Get All Orders
+    // GET ALL ORDERS
     @GetMapping
-    public List<Order> getAllOrders() {
-        return orderService.getAllOrders();
+    public ResponseEntity<List<Order>> getAllOrders() {
+        return ResponseEntity.ok(orderService.getAllOrders());
     }
 
-    // Update Order
-    @PutMapping("/{id}")
-    public Order updateOrder(@PathVariable Long id, @RequestBody Order order) {
-        return orderService.updateOrder(id, order);
+    // GET ORDERS BY CUSTOMER ID
+    @GetMapping("/customer/{customerId}")
+    public ResponseEntity<List<Order>> getOrdersByCustomer(@PathVariable Long customerId) {
+        return ResponseEntity.ok(orderService.getOrdersByCustomerId(customerId));
     }
 
-    // Delete Order
+    // UPDATE ORDER STATUS
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Order> updateOrderStatus(@PathVariable Long id,
+                                                   @RequestParam OrderStatus status) {
+        return ResponseEntity.ok(orderService.updateOrderStatus(id, status));
+    }
+
+    // DELETE ORDER
     @DeleteMapping("/{id}")
-    public void deleteOrder(@PathVariable Long id) {
+    public ResponseEntity<String> deleteOrder(@PathVariable Long id) {
         orderService.deleteOrder(id);
+        return ResponseEntity.ok("Order deleted successfully");
     }
 }

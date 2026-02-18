@@ -8,44 +8,44 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/customers") // consistent with entity
 public class CustomerController {
 
-    private final CustomerService userService;
+    private final CustomerService customerService;
 
-    public CustomerController(CustomerService userService) {
-        this.userService = userService;
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
-    // CREATE USER
+    // CREATE CUSTOMER
     @PostMapping
-    public ResponseEntity<Customer> createUser(@RequestBody Customer user) {
-        return ResponseEntity.ok(userService.createUser(user));
+    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
+        return ResponseEntity.ok(customerService.createCustomer(customer));
     }
 
-    // GET USER BY ID
+    // GET CUSTOMER BY ID
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getUserById(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.getUserById(id));
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
+        return ResponseEntity.ok(customerService.getCustomerById(id));
     }
 
-    // GET ALL USERS
+    // GET ALL CUSTOMERS
     @GetMapping
-    public ResponseEntity<List<Customer>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    public ResponseEntity<List<Customer>> getAllCustomers() {
+        return ResponseEntity.ok(customerService.getAllCustomers());
     }
 
-    // UPDATE USER
+    // UPDATE CUSTOMER
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateUser(@PathVariable Long id,
-                                               @RequestBody Customer user) {
-        return ResponseEntity.ok(userService.updateUser(id, user));
+    public ResponseEntity<Customer> updateCustomer(@PathVariable Long id,
+                                                   @RequestBody Customer customer) {
+        return ResponseEntity.ok(customerService.updateCustomer(id, customer));
     }
 
-    // DELETE USER
+    // DELETE CUSTOMER
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
-        return ResponseEntity.ok("User deleted successfully");
+    public ResponseEntity<String> deleteCustomer(@PathVariable Long id) {
+        customerService.deleteCustomer(id);
+        return ResponseEntity.ok("Customer deleted successfully");
     }
 }

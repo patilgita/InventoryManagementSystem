@@ -4,11 +4,12 @@ import com.InventoryManagementSystem.Entity.Product;
 import com.InventoryManagementSystem.Repository.ProductRepository;
 import com.InventoryManagementSystem.Service.ProductService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Transactional
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
@@ -26,8 +27,8 @@ public class ProductServiceImpl implements ProductService {
     // GET PRODUCT BY ID
     @Override
     public Product getProductById(Long id) {
-        Optional<Product> product = productRepository.findById(id);
-        return product.orElse(null);
+        return productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found with ID: " + id));
     }
 
     // GET ALL PRODUCTS
@@ -36,34 +37,49 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
 
+    // SEARCH PRODUCTS BY NAME
+    @Override
+    public List<Product> searchProductsByName(String name) {
+        return productRepository.findByProductNameContainingIgnoreCase(name);
+    }
+
+    // GET PRODUCT BY CODE
+    @Override
+    public Product getProductByCode(String productCode) {
+        return productRepository.findByProductCode(productCode)
+                .orElseThrow(() -> new RuntimeException("Product not found with code: " + productCode));
+    }
+
     // UPDATE PRODUCT
     @Override
     public Product updateProduct(Long id, Product product) {
-        Optional<Product> existingProduct = productRepository.findById(id);
+        Product existing = getProductById(id);
 
-        if (existingProduct.isPresent()) {
-            Product existing = existingProduct.get();
+        existing.setProductCode(product.getProductCode());
+        existing.setProductName(product.getProductName());
+        existing.setProductType(product.getProductType());
+        existing.setBrand(product.getBrand());
+        existing.setUnit(product.getUnit());
+        existing.setGstApplicable(product.isGstApplicable());
+        existing.setPrice(product.getPrice());
+        existing.setQuantity(product.getQuantity());
+        existing.setDescription(product.getDescription());
 
-            existing.setProductCode(product.getProductCode());
-            existing.setProductName(product.getProductName());
-            existing.setProductType(product.getProductType());
-            existing.setBrand(product.getBrand());
-            existing.setUnit(product.getUnit());
-            existing.setGstApplicable(product.isGstApplicable());
-            existing.setPrice(product.getPrice());
-            existing.setQuantity(product.getQuantity());
-            existing.setDescription(product.getDescription());
+        return productRepository.save(existing);
+    }
 
-            return productRepository.save(existing);
-        }
-
-        return null;
+    // UPDATE PRODUCT STOCK
+    @Override
+    public void updateProductStock(Long productId, int quantity) {
+        Product existing = getProductById(productId);
+        existing.setQuantity(quantity);
+        productRepository.save(existing);
     }
 
     // DELETE PRODUCT
     @Override
     public void deleteProduct(Long id) {
-        Optional<Product> existingProduct = productRepository.findById(id);
-        existingProduct.ifPresent(productRepository::delete);
+        Product existing = getProductById(id);
+        productRepository.delete(existing);
     }
 }

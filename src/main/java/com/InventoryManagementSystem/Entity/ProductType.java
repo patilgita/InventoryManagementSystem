@@ -1,60 +1,32 @@
 package com.InventoryManagementSystem.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "product_type")
+@Table(name = "product_types")
 public class ProductType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "type_name")
-    private String typeName;   // e.g. Electronics, Grocery
+    @Column(name = "type_name", unique = true)
+    private String typeName;
 
-    @Column(name = "product_id")
-    private Long productId;    // reference to product
+    // One ProductType -> Many Products
+    @OneToMany(mappedBy = "productType", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Product> products;
 
-    @Column(name = "product_name")
-    private String productName;
-
-    // Default Constructor
     public ProductType() {}
 
-    // Constructor
-    public ProductType(String typeName, Long productId, String productName) {
-        this.typeName = typeName;
-        this.productId = productId;
-        this.productName = productName;
-    }
+    public Long getId() { return id; }
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
+    public String getTypeName() { return typeName; }
+    public void setTypeName(String typeName) { this.typeName = typeName; }
 
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
+    public List<Product> getProducts() { return products; }
+    public void setProducts(List<Product> products) { this.products = products; }
 }

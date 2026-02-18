@@ -13,7 +13,6 @@ public class ProductController {
 
     private final ProductService productService;
 
-    // Constructor Injection
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
@@ -34,6 +33,18 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
+    }
+
+    // SEARCH PRODUCTS BY NAME
+    @GetMapping("/search")
+    public ResponseEntity<List<Product>> searchProducts(@RequestParam String name) {
+        return ResponseEntity.ok(productService.searchProductsByName(name));
+    }
+
+    // GET PRODUCT BY CODE
+    @GetMapping("/code/{productCode}")
+    public ResponseEntity<Product> getProductByCode(@PathVariable String productCode) {
+        return ResponseEntity.ok(productService.getProductByCode(productCode));
     }
 
     // UPDATE PRODUCT

@@ -4,11 +4,12 @@ import com.InventoryManagementSystem.Entity.Vendor;
 import com.InventoryManagementSystem.Repository.VendorRepository;
 import com.InventoryManagementSystem.Service.VendorService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Transactional
 public class VendorServiceImpl implements VendorService {
 
     private final VendorRepository vendorRepository;
@@ -17,47 +18,45 @@ public class VendorServiceImpl implements VendorService {
         this.vendorRepository = vendorRepository;
     }
 
+    // CREATE VENDOR
     @Override
     public Vendor createVendor(Vendor vendor) {
         return vendorRepository.save(vendor);
     }
 
+    // GET VENDOR BY ID
     @Override
     public Vendor getVendorById(Long id) {
-        Optional<Vendor> vendor = vendorRepository.findById(id);
-        return vendor.orElse(null); // Return null if not found
+        return vendorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vendor not found with ID: " + id));
     }
 
+    // GET ALL VENDORS
     @Override
     public List<Vendor> getAllVendors() {
         return vendorRepository.findAll();
     }
 
+    // UPDATE VENDOR
     @Override
     public Vendor updateVendor(Long id, Vendor vendor) {
-        Optional<Vendor> existingVendor = vendorRepository.findById(id);
+        Vendor existing = getVendorById(id);
 
-        if (existingVendor.isPresent()) {
-            Vendor existing = existingVendor.get();
+        existing.setName(vendor.getName());
+        existing.setEmail(vendor.getEmail());
+        existing.setPhone(vendor.getPhone());
+        existing.setAddress(vendor.getAddress());
+        existing.setCity(vendor.getCity());
+        existing.setState(vendor.getState());
+        existing.setPincode(vendor.getPincode());
 
-            // 🔥 Update fields here (example fields)
-            existing.setName(vendor.getName());
-            existing.setEmail(vendor.getEmail());
-            existing.setPhone(vendor.getPhone());
-            existing.setAddress(vendor.getAddress());
-            existing.setCity(vendor.getCity());
-            existing.setState(vendor.getState());
-            existing.setPincode(vendor.getPincode());
-
-            return vendorRepository.save(existing);
-        }
-
-        return null; // Return null if vendor doesn't exist
+        return vendorRepository.save(existing);
     }
 
+    // DELETE VENDOR
     @Override
     public void deleteVendor(Long id) {
-        Optional<Vendor> existingVendor = vendorRepository.findById(id);
-        existingVendor.ifPresent(vendorRepository::delete);
+        Vendor existing = getVendorById(id);
+        vendorRepository.delete(existing);
     }
 }

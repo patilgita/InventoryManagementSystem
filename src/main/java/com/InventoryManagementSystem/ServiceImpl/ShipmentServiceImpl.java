@@ -4,11 +4,12 @@ import com.InventoryManagementSystem.Entity.Shipment;
 import com.InventoryManagementSystem.Repository.ShipmentRepository;
 import com.InventoryManagementSystem.Service.ShipmentService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Transactional
 public class ShipmentServiceImpl implements ShipmentService {
 
     private final ShipmentRepository shipmentRepository;
@@ -17,60 +18,56 @@ public class ShipmentServiceImpl implements ShipmentService {
         this.shipmentRepository = shipmentRepository;
     }
 
+    // CREATE SHIPMENT
     @Override
     public Shipment createShipment(Shipment shipment) {
-
-        // 🔥 Fetch customer mobile & address from Order -> User
-        if (shipment.getOrder() != null && shipment.getOrder().getUser() != null) {
-            shipment.setCustomerMobile(shipment.getOrder().getUser().getPhone());
-            shipment.setCustomerAddress(shipment.getOrder().getUser().getAddress());
+        // ✅ Use getCustomer() instead of getUser()
+        if (shipment.getOrder() != null && shipment.getOrder().getCustomer() != null) {
+            shipment.setCustomerMobile(shipment.getOrder().getCustomer().getPhone());
+            shipment.setCustomerAddress(shipment.getOrder().getCustomer().getAddress());
         }
-
-        // trackingId will be auto-generated (S1, S2) via @PostPersist
         return shipmentRepository.save(shipment);
     }
 
+    // GET SHIPMENT BY ID
     @Override
     public Shipment getShipmentById(Long id) {
-        Optional<Shipment> shipment = shipmentRepository.findById(id);
-        return shipment.orElse(null);
+        return shipmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Shipment not found with ID: " + id));
     }
 
+    // GET ALL SHIPMENTS
     @Override
     public List<Shipment> getAllShipments() {
         return shipmentRepository.findAll();
     }
 
+    // UPDATE SHIPMENT
     @Override
     public Shipment updateShipment(Long id, Shipment shipment) {
-        Optional<Shipment> existingShipment = shipmentRepository.findById(id);
+        Shipment existing = getShipmentById(id);
 
-        if (existingShipment.isPresent()) {
-            Shipment existing = existingShipment.get();
+        existing.setShipmentName(shipment.getShipmentName());
+        existing.setShipmentDate(shipment.getShipmentDate());
+        existing.setShipmentAddress(shipment.getShipmentAddress());
+        existing.setStatus(shipment.getStatus());
+        existing.setSentByVendorName(shipment.getSentByVendorName());
 
-            existing.setShipmentName(shipment.getShipmentName());
-            existing.setShipmentDate(shipment.getShipmentDate());
-            existing.setShipmentAddress(shipment.getShipmentAddress()); // renamed
-            existing.setStatus(shipment.getStatus());
-            existing.setSentByVendorName(shipment.getSentByVendorName());
-
-            // update customer details again if order present
-            if (shipment.getOrder() != null && shipment.getOrder().getUser() != null) {
-                existing.setCustomerMobile(shipment.getOrder().getUser().getPhone());
-                existing.setCustomerAddress(shipment.getOrder().getUser().getAddress());
-            }
-
-            existing.setOrder(shipment.getOrder());
-
-            return shipmentRepository.save(existing);
+        // ✅ Update customer info from Order
+        if (shipment.getOrder() != null && shipment.getOrder().getCustomer() != null) {
+            existing.setCustomerMobile(shipment.getOrder().getCustomer().getPhone());
+            existing.setCustomerAddress(shipment.getOrder().getCustomer().getAddress());
         }
 
-        return null;
+        existing.setOrder(shipment.getOrder());
+
+        return shipmentRepository.save(existing);
     }
 
+    // DELETE SHIPMENT
     @Override
     public void deleteShipment(Long id) {
-        Optional<Shipment> existingShipment = shipmentRepository.findById(id);
-        existingShipment.ifPresent(shipmentRepository::delete);
+        Shipment existing = getShipmentById(id);
+        shipmentRepository.delete(existing);
     }
 }
