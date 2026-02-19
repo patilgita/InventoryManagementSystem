@@ -18,26 +18,23 @@ public class VendorServiceImpl implements VendorService {
         this.vendorRepository = vendorRepository;
     }
 
-    // CREATE VENDOR
     @Override
     public Vendor createVendor(Vendor vendor) {
         return vendorRepository.save(vendor);
     }
 
-    // GET VENDOR BY ID
     @Override
     public Vendor getVendorById(Long id) {
         return vendorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vendor not found with ID: " + id));
     }
 
-    // GET ALL VENDORS
     @Override
     public List<Vendor> getAllVendors() {
         return vendorRepository.findAll();
     }
 
-    // UPDATE VENDOR
+
     @Override
     public Vendor updateVendor(Long id, Vendor vendor) {
         Vendor existing = getVendorById(id);
@@ -53,7 +50,6 @@ public class VendorServiceImpl implements VendorService {
         return vendorRepository.save(existing);
     }
 
-    // DELETE VENDOR
     @Override
     public void deleteVendor(Long id) {
         Vendor existing = getVendorById(id);

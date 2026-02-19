@@ -21,44 +21,38 @@ public class ShipmentController {
         this.shipmentRepository = shipmentRepository;
     }
 
-    // CREATE SHIPMENT
-    @PostMapping
+    @PostMapping("/createShipment")
     public ResponseEntity<Shipment> createShipment(@RequestBody Shipment shipment) {
         Shipment savedShipment = shipmentService.createShipment(shipment);
         return ResponseEntity.ok(savedShipment);
     }
 
-    // TRACK BY TRACKING ID 🔥
-    @GetMapping("/track/{trackingId}")
+    @GetMapping("/getbyidtrack/{trackingId}")
     public ResponseEntity<Shipment> trackShipment(@PathVariable String trackingId) {
         Shipment shipment = shipmentRepository.findByTrackingId(trackingId)
                 .orElseThrow(() -> new RuntimeException("Shipment not found"));
         return ResponseEntity.ok(shipment);
     }
 
-    // GET SHIPMENT BY ID
-    @GetMapping("/{id}")
+    @GetMapping("/getbyidShipment/{id}")
     public ResponseEntity<Shipment> getShipmentById(@PathVariable Long id) {
         Shipment shipment = shipmentService.getShipmentById(id);
         return ResponseEntity.ok(shipment);
     }
 
-    // GET ALL SHIPMENTS
-    @GetMapping
+    @GetMapping("/getallShipment")
     public ResponseEntity<List<Shipment>> getAllShipments() {
         return ResponseEntity.ok(shipmentService.getAllShipments());
     }
 
-    // UPDATE SHIPMENT
-    @PutMapping("/{id}")
+    @PutMapping("/updateShipment/{id}")
     public ResponseEntity<Shipment> updateShipment(@PathVariable Long id,
                                                    @RequestBody Shipment shipment) {
         Shipment updatedShipment = shipmentService.updateShipment(id, shipment);
         return ResponseEntity.ok(updatedShipment);
     }
 
-    // DELETE SHIPMENT
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteShipment/{id}")
     public ResponseEntity<String> deleteShipment(@PathVariable Long id) {
         shipmentService.deleteShipment(id);
         return ResponseEntity.ok("Shipment deleted successfully");

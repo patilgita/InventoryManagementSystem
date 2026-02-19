@@ -17,17 +17,17 @@ public class ProductTypeController {
         this.productTypeService = productTypeService;
     }
 
-    @PostMapping
+    @PostMapping("/createProductType")
     public ResponseEntity<ProductType> createProductType(@RequestBody ProductType productType) {
         return ResponseEntity.ok(productTypeService.createProductType(productType));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getbyIdProductType/{id}")
     public ResponseEntity<ProductType> getProductType(@PathVariable Long id) {
         return ResponseEntity.ok(productTypeService.getProductTypeById(id));
     }
 
-    @GetMapping
+    @GetMapping("/getallProduct")
     public ResponseEntity<List<ProductType>> getAllProductTypes() {
         return ResponseEntity.ok(productTypeService.getAllProductTypes());
     }

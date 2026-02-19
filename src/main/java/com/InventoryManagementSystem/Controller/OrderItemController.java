@@ -1,7 +1,7 @@
 package com.InventoryManagementSystem.Controller;
 
 import com.InventoryManagementSystem.Entity.OrderItem;
-import com.InventoryManagementSystem.Service.OrderItemService; // ✔ interface import
+import com.InventoryManagementSystem.Service.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.*;
 public class OrderItemController {
 
     @Autowired
-    private OrderItemService orderItemService; // ✔ inject interface
+    private OrderItemService orderItemService;
 
-    // POST: http://localhost:8080/orders/1/items
     @PostMapping("/{orderId}/items")
     public OrderItem addOrderItem(
             @PathVariable Long orderId,

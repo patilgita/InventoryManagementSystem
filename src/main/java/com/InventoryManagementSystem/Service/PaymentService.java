@@ -17,7 +17,6 @@ public interface PaymentService {
 
     Payment updatePaymentStatus(Long id, PaymentStatus status);
 
-    // ✅ New method to update amount + status
     Payment updatePayment(Long id, double amount, PaymentStatus status);
 
     void deletePayment(Long id);

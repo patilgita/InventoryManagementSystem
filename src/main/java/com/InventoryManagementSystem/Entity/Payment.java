@@ -3,10 +3,14 @@ package com.InventoryManagementSystem.Entity;
 import com.InventoryManagementSystem.Enum.PaymentMethod;
 import com.InventoryManagementSystem.Enum.PaymentStatus;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "payments")
 public class Payment {
 
@@ -31,20 +35,5 @@ public class Payment {
         this.paymentDate = LocalDate.now();
     }
 
-    public Long getId() { return id; }
 
-    public double getAmount() { return amount; }
-    public void setAmount(double amount) { this.amount = amount; }
-
-    public LocalDate getPaymentDate() { return paymentDate; }
-    public void setPaymentDate(LocalDate paymentDate) { this.paymentDate = paymentDate; }
-
-    public PaymentMethod getPaymentMethod() { return paymentMethod; }
-    public void setPaymentMethod(PaymentMethod paymentMethod) { this.paymentMethod = paymentMethod; }
-
-    public PaymentStatus getPaymentStatus() { return paymentStatus; }
-    public void setPaymentStatus(PaymentStatus paymentStatus) { this.paymentStatus = paymentStatus; }
-
-    public Order getOrder() { return order; }
-    public void setOrder(Order order) { this.order = order; }
 }
