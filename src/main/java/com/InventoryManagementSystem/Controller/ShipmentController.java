@@ -1,6 +1,7 @@
 package com.InventoryManagementSystem.Controller;
 
 import com.InventoryManagementSystem.Entity.Shipment;
+import com.InventoryManagementSystem.Repository.ShipmentRepository;
 import com.InventoryManagementSystem.Service.ShipmentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +13,12 @@ import java.util.List;
 public class ShipmentController {
 
     private final ShipmentService shipmentService;
+    private final ShipmentRepository shipmentRepository;
 
-    public ShipmentController(ShipmentService shipmentService) {
+    public ShipmentController(ShipmentService shipmentService,
+                              ShipmentRepository shipmentRepository) {
         this.shipmentService = shipmentService;
+        this.shipmentRepository = shipmentRepository;
     }
 
     // CREATE SHIPMENT
@@ -22,6 +26,14 @@ public class ShipmentController {
     public ResponseEntity<Shipment> createShipment(@RequestBody Shipment shipment) {
         Shipment savedShipment = shipmentService.createShipment(shipment);
         return ResponseEntity.ok(savedShipment);
+    }
+
+    // TRACK BY TRACKING ID 🔥
+    @GetMapping("/track/{trackingId}")
+    public ResponseEntity<Shipment> trackShipment(@PathVariable String trackingId) {
+        Shipment shipment = shipmentRepository.findByTrackingId(trackingId)
+                .orElseThrow(() -> new RuntimeException("Shipment not found"));
+        return ResponseEntity.ok(shipment);
     }
 
     // GET SHIPMENT BY ID

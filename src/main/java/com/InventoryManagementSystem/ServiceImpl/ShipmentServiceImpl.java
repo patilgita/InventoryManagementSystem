@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 @Transactional
@@ -18,31 +19,42 @@ public class ShipmentServiceImpl implements ShipmentService {
         this.shipmentRepository = shipmentRepository;
     }
 
-    // CREATE SHIPMENT
     @Override
     public Shipment createShipment(Shipment shipment) {
-        // ✅ Use getCustomer() instead of getUser()
+
+        // 🔥 UNIQUE Tracking ID Generator
+        String trackingId;
+        Random random = new Random();
+
+        do {
+            trackingId = "TRK" + (1000 + random.nextInt(9000)); // TRK1000-TRK9999
+        } while (shipmentRepository.existsByTrackingId(trackingId));
+
+        shipment.setTrackingId(trackingId);
+
+        // 🔗 Tracking Link
+        shipment.setTrackingLink("http://localhost:8080/shipments/track/" + trackingId);
+
+        // Auto customer details from Order
         if (shipment.getOrder() != null && shipment.getOrder().getCustomer() != null) {
             shipment.setCustomerMobile(shipment.getOrder().getCustomer().getPhone());
             shipment.setCustomerAddress(shipment.getOrder().getCustomer().getAddress());
         }
+
         return shipmentRepository.save(shipment);
     }
 
-    // GET SHIPMENT BY ID
     @Override
     public Shipment getShipmentById(Long id) {
         return shipmentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Shipment not found with ID: " + id));
     }
 
-    // GET ALL SHIPMENTS
     @Override
     public List<Shipment> getAllShipments() {
         return shipmentRepository.findAll();
     }
 
-    // UPDATE SHIPMENT
     @Override
     public Shipment updateShipment(Long id, Shipment shipment) {
         Shipment existing = getShipmentById(id);
@@ -53,7 +65,6 @@ public class ShipmentServiceImpl implements ShipmentService {
         existing.setStatus(shipment.getStatus());
         existing.setSentByVendorName(shipment.getSentByVendorName());
 
-        // ✅ Update customer info from Order
         if (shipment.getOrder() != null && shipment.getOrder().getCustomer() != null) {
             existing.setCustomerMobile(shipment.getOrder().getCustomer().getPhone());
             existing.setCustomerAddress(shipment.getOrder().getCustomer().getAddress());
@@ -64,7 +75,6 @@ public class ShipmentServiceImpl implements ShipmentService {
         return shipmentRepository.save(existing);
     }
 
-    // DELETE SHIPMENT
     @Override
     public void deleteShipment(Long id) {
         Shipment existing = getShipmentById(id);

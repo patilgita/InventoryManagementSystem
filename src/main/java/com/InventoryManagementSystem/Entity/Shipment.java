@@ -1,5 +1,6 @@
 package com.InventoryManagementSystem.Entity;
 
+import com.InventoryManagementSystem.Enum.ShipmentStatus;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -11,8 +12,13 @@ public class Shipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Auto Generated Tracking ID (Unique)
     @Column(name = "tracking_id", unique = true)
     private String trackingId;
+
+    // Auto Generated Tracking Link
+    @Column(name = "tracking_link")
+    private String trackingLink;
 
     private String shipmentName;
     private LocalDate shipmentDate;
@@ -20,14 +26,17 @@ public class Shipment {
     @Column(name = "shipment_address")
     private String shipmentAddress;
 
+    // Using Enum for status
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status = "CREATED";
+    private ShipmentStatus status = ShipmentStatus.PREPARING;
 
     private String customerMobile;
     private String customerAddress;
     private String sentByVendorName;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    // 🔥 Important Fix: One Order -> Many Shipments
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
@@ -38,6 +47,9 @@ public class Shipment {
     public String getTrackingId() { return trackingId; }
     public void setTrackingId(String trackingId) { this.trackingId = trackingId; }
 
+    public String getTrackingLink() { return trackingLink; }
+    public void setTrackingLink(String trackingLink) { this.trackingLink = trackingLink; }
+
     public String getShipmentName() { return shipmentName; }
     public void setShipmentName(String shipmentName) { this.shipmentName = shipmentName; }
 
@@ -47,8 +59,8 @@ public class Shipment {
     public String getShipmentAddress() { return shipmentAddress; }
     public void setShipmentAddress(String shipmentAddress) { this.shipmentAddress = shipmentAddress; }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public ShipmentStatus getStatus() { return status; }
+    public void setStatus(ShipmentStatus status) { this.status = status; }
 
     public String getCustomerMobile() { return customerMobile; }
     public void setCustomerMobile(String customerMobile) { this.customerMobile = customerMobile; }
