@@ -22,7 +22,7 @@ public class ShipmentController {
         return ResponseEntity.ok(shipmentService.createShipment(shipment));
     }
 
-    @GetMapping("/Getshipmemtbyid")
+    @GetMapping("/Getshipmentbyid")
     public ResponseEntity<Shipment> getShipmentById(@PathVariable Long id) {
         return ResponseEntity.ok(shipmentService.getShipmentById(id));
     }
