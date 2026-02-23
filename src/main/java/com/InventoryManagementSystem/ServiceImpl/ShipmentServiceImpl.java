@@ -1,45 +1,36 @@
 package com.InventoryManagementSystem.ServiceImpl;
 
+import com.InventoryManagementSystem.Entity.Order;
 import com.InventoryManagementSystem.Entity.Shipment;
+import com.InventoryManagementSystem.Repository.OrderRepository;
 import com.InventoryManagementSystem.Repository.ShipmentRepository;
 import com.InventoryManagementSystem.Service.ShipmentService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Random;
 
 @Service
-@Transactional
 public class ShipmentServiceImpl implements ShipmentService {
 
     private final ShipmentRepository shipmentRepository;
+    private final OrderRepository orderRepository;
 
-    public ShipmentServiceImpl(ShipmentRepository shipmentRepository) {
+    public ShipmentServiceImpl(ShipmentRepository shipmentRepository,
+                               OrderRepository orderRepository) {
         this.shipmentRepository = shipmentRepository;
+        this.orderRepository = orderRepository;
     }
 
     @Override
     public Shipment createShipment(Shipment shipment) {
 
-        // 🔥 UNIQUE Tracking ID Generator
-        String trackingId;
-        Random random = new Random();
+        // Check if order exists
+        Long orderId = shipment.getOrder().getId();
 
-        do {
-            trackingId = "TRK" + (1000 + random.nextInt(9000)); // TRK1000-TRK9999
-        } while (shipmentRepository.existsByTrackingId(trackingId));
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found with ID: " + orderId));
 
-        shipment.setTrackingId(trackingId);
-
-        // 🔗 Tracking Link
-        shipment.setTrackingLink("http://localhost:8080/shipments/track/" + trackingId);
-
-        // Auto customer details from Order
-        if (shipment.getOrder() != null && shipment.getOrder().getCustomer() != null) {
-            shipment.setCustomerMobile(shipment.getOrder().getCustomer().getPhone());
-            shipment.setCustomerAddress(shipment.getOrder().getCustomer().getAddress());
-        }
+        shipment.setOrder(order);
 
         return shipmentRepository.save(shipment);
     }
@@ -47,7 +38,7 @@ public class ShipmentServiceImpl implements ShipmentService {
     @Override
     public Shipment getShipmentById(Long id) {
         return shipmentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Shipment not found with ID: " + id));
+                .orElseThrow(() -> new RuntimeException("Shipment not found"));
     }
 
     @Override
@@ -57,27 +48,30 @@ public class ShipmentServiceImpl implements ShipmentService {
 
     @Override
     public Shipment updateShipment(Long id, Shipment shipment) {
-        Shipment existing = getShipmentById(id);
+        Shipment existing = shipmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Shipment not found"));
 
+        existing.setTrackingId(shipment.getTrackingId());
+        existing.setTrackingLink(shipment.getTrackingLink());
         existing.setShipmentName(shipment.getShipmentName());
         existing.setShipmentDate(shipment.getShipmentDate());
         existing.setShipmentAddress(shipment.getShipmentAddress());
         existing.setStatus(shipment.getStatus());
+        existing.setCustomerMobile(shipment.getCustomerMobile());
+        existing.setCustomerAddress(shipment.getCustomerAddress());
         existing.setSentByVendorName(shipment.getSentByVendorName());
-
-        if (shipment.getOrder() != null && shipment.getOrder().getCustomer() != null) {
-            existing.setCustomerMobile(shipment.getOrder().getCustomer().getPhone());
-            existing.setCustomerAddress(shipment.getOrder().getCustomer().getAddress());
-        }
-
-        existing.setOrder(shipment.getOrder());
 
         return shipmentRepository.save(existing);
     }
 
     @Override
     public void deleteShipment(Long id) {
-        Shipment existing = getShipmentById(id);
-        shipmentRepository.delete(existing);
+        shipmentRepository.deleteById(id);
+    }
+
+    @Override
+    public Shipment getByTrackingId(String trackingId) {
+        return shipmentRepository.findByTrackingId(trackingId)
+                .orElseThrow(() -> new RuntimeException("Shipment not found"));
     }
 }

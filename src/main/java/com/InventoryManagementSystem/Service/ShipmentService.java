@@ -16,4 +16,5 @@ public interface ShipmentService {
 
     void deleteShipment(Long id);
 
+    Shipment getByTrackingId(String trackingId); // NEW METHOD
 }
