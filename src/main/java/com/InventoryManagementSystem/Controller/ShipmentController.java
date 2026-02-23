@@ -22,7 +22,7 @@ public class ShipmentController {
         return ResponseEntity.ok(shipmentService.createShipment(shipment));
     }
 
-    @GetMapping("/Getshipmentbyid")
+    @GetMapping("/Getshipmentbyid/{id}")
     public ResponseEntity<Shipment> getShipmentById(@PathVariable Long id) {
         return ResponseEntity.ok(shipmentService.getShipmentById(id));
     }
@@ -44,7 +44,7 @@ public class ShipmentController {
         return ResponseEntity.ok("Shipment deleted successfully");
     }
 
-    @GetMapping("/trackShipmentby{trackingId}")
+    @GetMapping("/trackShipmentby/{trackingId}")
     public ResponseEntity<Shipment> trackShipment(@PathVariable String trackingId) {
         return ResponseEntity.ok(shipmentService.getByTrackingId(trackingId));
     }
