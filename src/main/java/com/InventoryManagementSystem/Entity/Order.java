@@ -1,6 +1,7 @@
 package com.InventoryManagementSystem.Entity;
 
 import com.InventoryManagementSystem.Enum.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -35,7 +36,7 @@ public class Order {
     private List<OrderItem> orderItems;
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @JsonBackReference
     private Shipment shipment;
 
     public Order() {}

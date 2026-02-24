@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@RequestMapping("/shipments")
 public class ShipmentController {
 
     private final ShipmentService shipmentService;
