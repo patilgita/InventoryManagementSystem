@@ -1,6 +1,7 @@
 package com.InventoryManagementSystem.Entity;
 
 import com.InventoryManagementSystem.Enum.ShipmentStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,6 +41,7 @@ public class Shipment {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id", nullable = false)
+    @JsonBackReference
     private Order order;
 
     public Shipment() {}

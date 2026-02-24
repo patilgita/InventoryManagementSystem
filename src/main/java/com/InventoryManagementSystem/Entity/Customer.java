@@ -1,5 +1,6 @@
 package com.InventoryManagementSystem.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -32,7 +33,7 @@ public class Customer {
     private String gstNumber;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @JsonBackReference
     private List<Order> orders;
 
     public Customer() {}

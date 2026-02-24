@@ -1,5 +1,6 @@
 package com.InventoryManagementSystem.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class Vendor {
     private String pincode;
 
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Product> products;
 
     public Vendor() {}
