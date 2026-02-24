@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/payments")
+//@RequestMapping("/payments")
 public class PaymentController {
 
     private final PaymentService paymentService;
@@ -18,7 +18,7 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
-    @PostMapping("/createorder/{orderId}")
+    @PostMapping("/createPayment/{orderId}")
     public ResponseEntity<Payment> createPayment(@PathVariable Long orderId,
                                                  @RequestBody Payment payment) {
         Payment savedPayment = paymentService.createPayment(orderId, payment);

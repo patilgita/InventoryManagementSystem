@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/shipments")
+//@RequestMapping("/shipments")
 public class ShipmentController {
 
     private final ShipmentService shipmentService;
@@ -17,22 +17,22 @@ public class ShipmentController {
         this.shipmentService = shipmentService;
     }
 
-    @PostMapping("/createOrder")
+    @PostMapping("/createShipment")
     public ResponseEntity<Shipment> createShipment(@RequestBody Shipment shipment) {
         return ResponseEntity.ok(shipmentService.createShipment(shipment));
     }
 
-    @GetMapping("/Getshipmentbyid/{id}")
-    public ResponseEntity<Shipment> getShipmentById(@PathVariable Long id) {
-        return ResponseEntity.ok(shipmentService.getShipmentById(id));
-    }
-
-    @GetMapping("/GetAllShipments")
+    @GetMapping("/getallShipment")
     public ResponseEntity<List<Shipment>> getAllShipments() {
         return ResponseEntity.ok(shipmentService.getAllShipments());
     }
 
-    @PutMapping("/UpdateShipment/{id}")
+    @GetMapping("getShipmentById/{id}")
+    public ResponseEntity<Shipment> getShipmentById(@PathVariable Long id) {
+        return ResponseEntity.ok(shipmentService.getShipmentById(id));
+    }
+
+    @PutMapping("/updateShipment/{id}")
     public ResponseEntity<Shipment> updateShipment(@PathVariable Long id,
                                                    @RequestBody Shipment shipment) {
         return ResponseEntity.ok(shipmentService.updateShipment(id, shipment));
@@ -41,11 +41,6 @@ public class ShipmentController {
     @DeleteMapping("/DeleteShipment/{id}")
     public ResponseEntity<String> deleteShipment(@PathVariable Long id) {
         shipmentService.deleteShipment(id);
-        return ResponseEntity.ok("Shipment deleted successfully");
-    }
-
-    @GetMapping("/trackShipmentby/{trackingId}")
-    public ResponseEntity<Shipment> trackShipment(@PathVariable String trackingId) {
-        return ResponseEntity.ok(shipmentService.getByTrackingId(trackingId));
+        return ResponseEntity.ok("Deleted Successfully");
     }
 }
