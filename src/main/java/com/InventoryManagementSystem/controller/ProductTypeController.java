@@ -1,0 +1,34 @@
+package com.InventoryManagementSystem.controller;
+
+import com.InventoryManagementSystem.entity.ProductType;
+import com.InventoryManagementSystem.service.ProductTypeService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/product-types")
+public class ProductTypeController {
+
+    private final ProductTypeService productTypeService;
+
+    public ProductTypeController(ProductTypeService productTypeService) {
+        this.productTypeService = productTypeService;
+    }
+
+    @PostMapping("/createProductType")
+    public ResponseEntity<ProductType> createProductType(@RequestBody ProductType productType) {
+        return ResponseEntity.ok(productTypeService.createProductType(productType));
+    }
+
+    @GetMapping("/getbyIdProductType/{id}")
+    public ResponseEntity<ProductType> getProductType(@PathVariable Long id) {
+        return ResponseEntity.ok(productTypeService.getProductTypeById(id));
+    }
+
+    @GetMapping("/getallProduct")
+    public ResponseEntity<List<ProductType>> getAllProductTypes() {
+        return ResponseEntity.ok(productTypeService.getAllProductTypes());
+    }
+}
