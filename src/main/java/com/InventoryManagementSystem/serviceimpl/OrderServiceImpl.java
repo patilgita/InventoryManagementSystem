@@ -49,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
                 item.setOrder(order);
 
                 // Calculate GST and total
-                double gstAmount = product.isGstApplicable() ? product.getPrice() * product.getGstPercentage() / 100 : 0;
+                double gstAmount = product.getGstApplicable() ? product.getPrice() * product.getGstPercentage() / 100 : 0;
                 double totalPrice = (product.getPrice() + gstAmount) * item.getQuantity();
 
                 item.setPrice(product.getPrice());
