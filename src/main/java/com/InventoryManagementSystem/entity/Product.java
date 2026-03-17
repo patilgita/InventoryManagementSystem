@@ -18,20 +18,18 @@ public class Product {
     private String productName;
     private Double price;
 
-    // ✅ Added fields (required for service)
     private String productCode;
     private String unit;
     private Boolean gstApplicable;
+    private Double gstPercentage;   // ✅ ADD THIS
     private Integer quantity;
     private String description;
 
-    // ✅ Correct mapping
     @ManyToOne
     @JoinColumn(name = "product_type_id")
     @JsonBackReference
     private ProductType productType;
 
-    // ✅ Add Brand (since service uses it)
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
