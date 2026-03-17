@@ -33,15 +33,13 @@ public class Vendor {
     private String pincode;
     private String email;
     private String phone;
-
-    // ✅ Vendor → Product
+    // Vendor → Product
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Product> products;
 
-    // ✅ Vendor → Brand (ADD THIS)
+    // Vendor → Brand
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<Brand> brands;
 
     public Vendor() {}

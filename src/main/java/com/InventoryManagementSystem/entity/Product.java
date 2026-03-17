@@ -21,7 +21,7 @@ public class Product {
     private String productCode;
     private String unit;
     private Boolean gstApplicable;
-    private Double gstPercentage;   // ✅ ADD THIS
+    private Double gstPercentage;
     private Integer quantity;
     private String description;
 
@@ -33,6 +33,12 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
+
+    // ✅ ADD THIS (IMPORTANT FIX)
+    @ManyToOne
+    @JoinColumn(name = "vendor_id")
+    @JsonBackReference
+    private Vendor vendor;
 
     public Product() {}
 }
