@@ -2,6 +2,7 @@ package com.InventoryManagementSystem.entity;
 
 import com.InventoryManagementSystem.Enum.State;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,7 +34,7 @@ public class Vendor {
     private String phone;
 
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonManagedReference
     private List<Product> products;
 
     public Vendor() {}

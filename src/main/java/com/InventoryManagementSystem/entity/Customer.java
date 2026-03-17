@@ -1,5 +1,6 @@
 package com.InventoryManagementSystem.entity;
 
+import com.InventoryManagementSystem.Enum.State;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -17,19 +18,18 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String companyName;
+    private String ownerName;
 
-    @Column(unique = true, nullable = false)
-    private String email;
-
-    private String phone;
-    private String address;
+    private String landmark;
     private String city;
-    private String state;
+    private String taluka;
+    @Enumerated(EnumType.STRING)
+    private State state;
     private String pincode;
 
-    @Column(name = "gst_number")
-    private String gstNumber;
+    private String email;
+    private String phone;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     @JsonBackReference

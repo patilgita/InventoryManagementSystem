@@ -22,12 +22,12 @@ public class ProductTypeController {
         return ResponseEntity.ok(productTypeService.createProductType(productType));
     }
 
-    @GetMapping("/getbyIdProductType/{id}")
+    @GetMapping("/getProductTypeById/{id}")
     public ResponseEntity<ProductType> getProductType(@PathVariable Long id) {
         return ResponseEntity.ok(productTypeService.getProductTypeById(id));
     }
 
-    @GetMapping("/getallProduct")
+    @GetMapping("/getAllProductTypes")
     public ResponseEntity<List<ProductType>> getAllProductTypes() {
         return ResponseEntity.ok(productTypeService.getAllProductTypes());
     }

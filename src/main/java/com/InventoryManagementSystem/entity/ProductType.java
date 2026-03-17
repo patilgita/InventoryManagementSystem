@@ -25,6 +25,4 @@ public class ProductType {
     private List<Product> products;
 
     public ProductType() {}
-
-
 }

@@ -4,11 +4,12 @@ import com.InventoryManagementSystem.entity.Customer;
 import com.InventoryManagementSystem.repository.CustomerRepository;
 import com.InventoryManagementSystem.service.CustomerService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Transactional
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
@@ -24,8 +25,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer getCustomerById(Long id) {
-        Optional<Customer> customer = customerRepository.findById(id);
-        return customer.orElse(null);
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Customer not found with ID: " + id));
     }
 
     @Override
@@ -35,27 +36,26 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer updateCustomer(Long id, Customer customer) {
-        Optional<Customer> existingCustomer = customerRepository.findById(id);
-        if (existingCustomer.isPresent()) {
-            Customer existing = existingCustomer.get();
+        Customer existing = getCustomerById(id);
 
-            existing.setName(customer.getName());
-            existing.setEmail(customer.getEmail());
-            existing.setPhone(customer.getPhone());
-            existing.setAddress(customer.getAddress());
-            existing.setCity(customer.getCity());
-            existing.setState(customer.getState());
-            existing.setPincode(customer.getPincode());
-            existing.setGstNumber(customer.getGstNumber());
+        existing.setCompanyName(customer.getCompanyName());
+        existing.setOwnerName(customer.getOwnerName());
 
-            return customerRepository.save(existing);
-        }
-        return null;
+        existing.setLandmark(customer.getLandmark());
+        existing.setCity(customer.getCity());
+        existing.setTaluka(customer.getTaluka());
+        existing.setState(customer.getState());
+        existing.setPincode(customer.getPincode());
+
+        existing.setEmail(customer.getEmail());
+        existing.setPhone(customer.getPhone());
+
+        return customerRepository.save(existing);
     }
 
     @Override
     public void deleteCustomer(Long id) {
-        Optional<Customer> existingCustomer = customerRepository.findById(id);
-        existingCustomer.ifPresent(customerRepository::delete);
+        Customer existing = getCustomerById(id);
+        customerRepository.delete(existing);
     }
 }

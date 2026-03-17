@@ -1,6 +1,6 @@
 package com.InventoryManagementSystem.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,35 +15,13 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "product_code", unique = true)
-    private String productCode;
-
-    @Column(name = "product_name")
     private String productName;
+    private Double price;
 
     @ManyToOne
     @JoinColumn(name = "product_type_id")
+    @JsonManagedReference
     private ProductType productType;
 
-    private String brand;
-    private String unit;
-
-    @Column(name = "gst_applicable")
-    private boolean gstApplicable;
-
-    @Column(name = "gst_percentage")
-    private double gstPercentage;
-
-    private double price;
-    private int quantity;
-    private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "vendor_id")
-    @JsonBackReference
-    private Vendor vendor;
-
     public Product() {}
-
-
 }

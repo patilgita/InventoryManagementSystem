@@ -34,18 +34,23 @@ public class VendorServiceImpl implements VendorService {
         return vendorRepository.findAll();
     }
 
-
     @Override
     public Vendor updateVendor(Long id, Vendor vendor) {
         Vendor existing = getVendorById(id);
 
-        existing.setName(vendor.getName());
-        existing.setEmail(vendor.getEmail());
-        existing.setPhone(vendor.getPhone());
-        existing.setAddress(vendor.getAddress());
+        // Updated field mappings
+        existing.setCompanyName(vendor.getCompanyName());
+        existing.setOwnerName(vendor.getOwnerName());
+        existing.setGstNo(vendor.getGstNo());
+
+        existing.setLandmark(vendor.getLandmark());
         existing.setCity(vendor.getCity());
+        existing.setTaluka(vendor.getTaluka());
         existing.setState(vendor.getState());
         existing.setPincode(vendor.getPincode());
+
+        existing.setEmail(vendor.getEmail());
+        existing.setPhone(vendor.getPhone());
 
         return vendorRepository.save(existing);
     }
