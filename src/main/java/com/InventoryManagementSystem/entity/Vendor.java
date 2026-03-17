@@ -26,16 +26,23 @@ public class Vendor {
     private String landmark;
     private String city;
     private String taluka;
+
     @Enumerated(EnumType.STRING)
     private State state;
-    private String pincode;
 
+    private String pincode;
     private String email;
     private String phone;
 
+    // ✅ Vendor → Product
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Product> products;
+
+    // ✅ Vendor → Brand (ADD THIS)
+    @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Brand> brands;
 
     public Vendor() {}
 }

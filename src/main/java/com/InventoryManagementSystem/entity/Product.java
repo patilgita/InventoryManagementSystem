@@ -1,6 +1,6 @@
 package com.InventoryManagementSystem.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,10 +18,23 @@ public class Product {
     private String productName;
     private Double price;
 
+    // ✅ Added fields (required for service)
+    private String productCode;
+    private String unit;
+    private Boolean gstApplicable;
+    private Integer quantity;
+    private String description;
+
+    // ✅ Correct mapping
     @ManyToOne
     @JoinColumn(name = "product_type_id")
-    @JsonManagedReference
+    @JsonBackReference
     private ProductType productType;
+
+    // ✅ Add Brand (since service uses it)
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
 
     public Product() {}
 }

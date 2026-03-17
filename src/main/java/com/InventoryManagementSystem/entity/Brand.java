@@ -1,6 +1,7 @@
 package com.InventoryManagementSystem.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,15 +20,15 @@ public class Brand {
 
     private String brandName;
 
-    // Vendor relationship
+    // ✅ Child side
     @ManyToOne
     @JoinColumn(name = "vendor_id", nullable = false)
-    @JsonBackReference   // ✅ FIX
+    @JsonBackReference
     private Vendor vendor;
 
-    // Product relationship
+    // ✅ Parent side
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
-    @JsonBackReference   // ✅ FIX
+    @JsonManagedReference   // ✅ FIX
     private List<Product> products;
 
     public Brand() {}
