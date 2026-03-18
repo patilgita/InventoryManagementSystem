@@ -1,6 +1,6 @@
 package com.InventoryManagementSystem.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,7 @@ public class Product {
     private String productName;
 
     private Double price;   // selling price
-    private Double mrp;     // ✅ added MRP
+    private Double mrp;     // MRP
 
     private String productCode;
 
@@ -30,12 +30,12 @@ public class Product {
     private Integer quantity;
     private String description;
 
-    private LocalDate productAddedDate; // ✅ added date
+    private LocalDate productAddedDate;
 
     // Product Type
     @ManyToOne
     @JoinColumn(name = "product_type_id")
-    @JsonBackReference
+    @JsonIgnore
     private ProductType productType;
 
     // Brand
@@ -43,16 +43,16 @@ public class Product {
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
-    // Vendor (Company Name)
+    // Vendor
     @ManyToOne
     @JoinColumn(name = "vendor_id")
-    @JsonBackReference
+    @JsonIgnore
     private Vendor vendor;
 
     // Unit Type
     @ManyToOne
     @JoinColumn(name = "unit_type_id")
-    @JsonBackReference
+    @JsonIgnore
     private UnitType unitType;
 
     public Product() {}
