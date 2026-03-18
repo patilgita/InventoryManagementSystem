@@ -21,9 +21,11 @@ public class SecurityConfig {
 
         http
                 .csrf(csrf -> csrf.disable())
+                .formLogin(form -> form.disable())   // ✅ IMPORTANT
+                .httpBasic(basic -> basic.disable()) // ✅ IMPORTANT
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()  // ✅ login खुला आहे
-                        .anyRequest().authenticated()             // ✅ बाकी सर्व secure
+                        .requestMatchers("/auth/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
