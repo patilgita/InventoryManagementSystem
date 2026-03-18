@@ -1,9 +1,9 @@
 package com.InventoryManagementSystem.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class ProductType {
     private String typeName;
 
     @OneToMany(mappedBy = "productType", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Product> products;
 
     public ProductType() {}

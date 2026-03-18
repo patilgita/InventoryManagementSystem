@@ -1,10 +1,10 @@
 package com.InventoryManagementSystem.entity;
 
 import com.InventoryManagementSystem.Enum.State;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
@@ -18,9 +18,8 @@ public class Vendor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String vendorName;   // ✅ replaced ownerName
+    private String vendorName;
     private String companyName;
-
     private String gstNo;
 
     private String landmark;
@@ -34,13 +33,12 @@ public class Vendor {
     private String email;
     private String phone;
 
-    // Vendor → Product
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Product> products;
 
-    // Vendor → Brand
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Brand> brands;
 
     public Vendor() {}

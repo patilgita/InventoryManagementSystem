@@ -1,10 +1,9 @@
 package com.InventoryManagementSystem.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
@@ -20,14 +19,13 @@ public class Brand {
 
     private String brandName;
 
-    // ✅ ADD THIS (VERY IMPORTANT)
     @ManyToOne
     @JoinColumn(name = "vendor_id")
-    @JsonBackReference
+    @JsonIgnore
     private Vendor vendor;
 
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Product> products;
 
     public Brand() {}
