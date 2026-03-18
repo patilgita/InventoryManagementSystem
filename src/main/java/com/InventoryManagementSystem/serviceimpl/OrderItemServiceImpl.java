@@ -1,11 +1,7 @@
-package com.InventoryManagementSystem.serviceimpl;
+package com.InventoryManagementSystem.service.impl;
 
-import com.InventoryManagementSystem.entity.Order;
 import com.InventoryManagementSystem.entity.OrderItem;
-import com.InventoryManagementSystem.entity.Product;
 import com.InventoryManagementSystem.repository.OrderItemRepository;
-import com.InventoryManagementSystem.repository.OrderRepository;
-import com.InventoryManagementSystem.repository.ProductRepository;
 import com.InventoryManagementSystem.service.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,30 +14,27 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
-    @Autowired
-    private OrderRepository orderRepository;
-
-    @Autowired
-    private ProductRepository productRepository;
-
     @Override
-    public OrderItem createOrderItem(Long orderId, OrderItem orderItem) {
+    public OrderItem saveOrderItem(OrderItem orderItem) {
 
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+        // GST + Total calculation
+        double base = orderItem.getPrice() * orderItem.getQuantity();
+        double gst = base * 0.18; // 18% GST
 
-        Product product = productRepository.findById(orderItem.getProduct().getId())
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-
-        orderItem.setOrder(order);
-        orderItem.setProduct(product);
+        orderItem.setGstAmount(gst);
+        orderItem.setTotalPrice(base + gst);
 
         return orderItemRepository.save(orderItem);
     }
 
     @Override
-    public List<OrderItem> getItemsByOrderId(Long orderId) {
-        return null;
+    public List<OrderItem> getAllOrderItems() {
+        return orderItemRepository.findAll();
+    }
+
+    @Override
+    public OrderItem getOrderItemById(Long id) {
+        return orderItemRepository.findById(id).orElse(null);
     }
 
     @Override

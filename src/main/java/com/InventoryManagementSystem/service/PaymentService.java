@@ -1,23 +1,16 @@
 package com.InventoryManagementSystem.service;
 
 import com.InventoryManagementSystem.entity.Payment;
-import com.InventoryManagementSystem.Enum.PaymentStatus;
 
 import java.util.List;
 
 public interface PaymentService {
 
-    Payment createPayment(Long orderId, Payment payment);
-
-    Payment getPaymentById(Long id);
+    Payment savePayment(Payment payment);
 
     List<Payment> getAllPayments();
 
-    List<Payment> getPaymentsByOrderId(Long orderId);
-
-    Payment updatePaymentStatus(Long id, PaymentStatus status);
-
-    Payment updatePayment(Long id, double amount, PaymentStatus status);
+    Payment getPaymentById(Long id);
 
     void deletePayment(Long id);
 }

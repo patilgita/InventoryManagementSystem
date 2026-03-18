@@ -1,7 +1,6 @@
 package com.InventoryManagementSystem.entity;
 
 import com.InventoryManagementSystem.Enum.State;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -19,8 +18,9 @@ public class Vendor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String vendorName;   // ✅ replaced ownerName
     private String companyName;
-    private String ownerName;
+
     private String gstNo;
 
     private String landmark;
@@ -33,6 +33,7 @@ public class Vendor {
     private String pincode;
     private String email;
     private String phone;
+
     // Vendor → Product
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
     @JsonManagedReference

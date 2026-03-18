@@ -5,18 +5,32 @@ import com.InventoryManagementSystem.service.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/order-items")
 public class OrderItemController {
 
     @Autowired
     private OrderItemService orderItemService;
 
-    @PostMapping("/{orderId}/items")
-    public OrderItem addOrderItem(
-            @PathVariable Long orderId,
-            @RequestBody OrderItem orderItem) {
+    @PostMapping
+    public OrderItem createOrderItem(@RequestBody OrderItem orderItem) {
+        return orderItemService.saveOrderItem(orderItem);
+    }
 
-        return orderItemService.createOrderItem(orderId, orderItem);
+    @GetMapping
+    public List<OrderItem> getAllOrderItems() {
+        return orderItemService.getAllOrderItems();
+    }
+
+    @GetMapping("/{id}")
+    public OrderItem getOrderItemById(@PathVariable Long id) {
+        return orderItemService.getOrderItemById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteOrderItem(@PathVariable Long id) {
+        orderItemService.deleteOrderItem(id);
     }
 }

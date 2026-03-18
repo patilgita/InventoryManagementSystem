@@ -2,33 +2,35 @@ package com.InventoryManagementSystem.controller;
 
 import com.InventoryManagementSystem.entity.ProductType;
 import com.InventoryManagementSystem.service.ProductTypeService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/product-types")
+@RequestMapping("/api/product-types")
 public class ProductTypeController {
 
-    private final ProductTypeService productTypeService;
+    @Autowired
+    private ProductTypeService productTypeService;
 
-    public ProductTypeController(ProductTypeService productTypeService) {
-        this.productTypeService = productTypeService;
+    @PostMapping
+    public ProductType createProductType(@RequestBody ProductType productType) {
+        return productTypeService.saveProductType(productType);
     }
 
-    @PostMapping("/createProductType")
-    public ResponseEntity<ProductType> createProductType(@RequestBody ProductType productType) {
-        return ResponseEntity.ok(productTypeService.createProductType(productType));
+    @GetMapping
+    public List<ProductType> getAllProductTypes() {
+        return productTypeService.getAllProductTypes();
     }
 
-    @GetMapping("/getProductTypeById/{id}")
-    public ResponseEntity<ProductType> getProductType(@PathVariable Long id) {
-        return ResponseEntity.ok(productTypeService.getProductTypeById(id));
+    @GetMapping("/{id}")
+    public ProductType getProductTypeById(@PathVariable Long id) {
+        return productTypeService.getProductTypeById(id);
     }
 
-    @GetMapping("/getAllProductTypes")
-    public ResponseEntity<List<ProductType>> getAllProductTypes() {
-        return ResponseEntity.ok(productTypeService.getAllProductTypes());
+    @DeleteMapping("/{id}")
+    public void deleteProductType(@PathVariable Long id) {
+        productTypeService.deleteProductType(id);
     }
 }

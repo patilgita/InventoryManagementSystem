@@ -6,15 +6,11 @@ import java.util.List;
 
 public interface ShipmentService {
 
-    Shipment createShipment(Shipment shipment);
-
-    Shipment getShipmentById(Long id);
+    Shipment saveShipment(Shipment shipment);
 
     List<Shipment> getAllShipments();
 
-    Shipment updateShipment(Long id, Shipment shipment);
+    Shipment getShipmentById(Long id);
 
     void deleteShipment(Long id);
-
-    Shipment getByTrackingId(String trackingId); // NEW METHOD
 }

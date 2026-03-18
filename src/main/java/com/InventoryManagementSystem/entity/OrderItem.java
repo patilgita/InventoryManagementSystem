@@ -25,11 +25,9 @@ public class OrderItem {
     private Product product;
 
     private Integer quantity;
-
     private double price;
     private double gstAmount;
     private double totalPrice;
 
     public OrderItem() {}
-
-   }
+}

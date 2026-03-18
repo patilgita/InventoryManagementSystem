@@ -21,30 +21,29 @@ public class Shipment {
     @Column(name = "tracking_id", unique = true)
     private String trackingId;
 
-    @Column(name = "tracking_link")
     private String trackingLink;
 
     private String shipmentName;
+
     private LocalDate shipmentDate;
 
-    @Column(name = "shipment_address")
     private String shipmentAddress;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private ShipmentStatus status = ShipmentStatus.PREPARING;
 
+    private String customerName;
     private String customerMobile;
     private String customerAddress;
-    private String sentByVendorName;
 
+    private String companyName; // vendor/company
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id", nullable = false)
     @JsonBackReference
     private Order order;
 
-    public Shipment() {}
-
-
+    public Shipment() {
+        this.shipmentDate = LocalDate.now(); // auto date
+    }
 }

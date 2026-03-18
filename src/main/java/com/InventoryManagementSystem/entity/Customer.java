@@ -16,20 +16,22 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // customer_id
 
-    private String companyName;
-    private String ownerName;
-
+    private String customerName; // customer_name
     private String landmark;
     private String city;
-    private String taluka;
-    @Enumerated(EnumType.STRING)
-    private State state;
+    private String taluka; // Sub-district
     private String pincode;
-
     private String email;
     private String phone;
+
+    @Enumerated(EnumType.STRING)
+    private State state; // Enum dropdown
+
+    @ManyToOne
+    @JoinColumn(name = "vendor_id") // Links company_name to Vendor
+    private Vendor vendor;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     @JsonBackReference

@@ -20,15 +20,14 @@ public class Brand {
 
     private String brandName;
 
-    // ✅ Child side
+    // ✅ ADD THIS (VERY IMPORTANT)
     @ManyToOne
-    @JoinColumn(name = "vendor_id", nullable = false)
+    @JoinColumn(name = "vendor_id")
     @JsonBackReference
     private Vendor vendor;
 
-    // ✅ Parent side
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
-    @JsonManagedReference   // ✅ FIX
+    @JsonManagedReference
     private List<Product> products;
 
     public Brand() {}

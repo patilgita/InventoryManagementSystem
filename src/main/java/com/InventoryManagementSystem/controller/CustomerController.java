@@ -2,47 +2,36 @@ package com.InventoryManagementSystem.controller;
 
 import com.InventoryManagementSystem.entity.Customer;
 import com.InventoryManagementSystem.service.CustomerService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/api/customers")
 public class CustomerController {
 
-    private final CustomerService customerService;
+    @Autowired
+    private CustomerService customerService;
 
-    public CustomerController(CustomerService customerService)
-    {
-        this.customerService = customerService;
+    @PostMapping
+    public Customer createCustomer(@RequestBody Customer customer) {
+        return customerService.saveCustomer(customer);
     }
 
-    @PostMapping("/createCustomer")
-    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
-        return ResponseEntity.ok(customerService.createCustomer(customer));
+    @GetMapping
+    public List<Customer> getAllCustomers() {
+        return customerService.getAllCustomers();
     }
 
-    @GetMapping("/getbyidCustomer/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
-        return ResponseEntity.ok(customerService.getCustomerById(id));
+    @GetMapping("/{id}")
+    public Customer getCustomerById(@PathVariable Long id) {
+        return customerService.getCustomerById(id);
     }
 
-    @GetMapping("/getAllCustomer")
-    public ResponseEntity<List<Customer>> getAllCustomers() {
-        return ResponseEntity.ok(customerService.getAllCustomers());
-    }
-
-    @PutMapping("/updateCustomer/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable Long id,
-                                                   @RequestBody Customer customer) {
-        return ResponseEntity.ok(customerService.updateCustomer(id, customer));
-    }
-
-    @DeleteMapping("/deleteCustomer/{id}")
-    public ResponseEntity<String> deleteCustomer(@PathVariable Long id) {
+    @DeleteMapping("/{id}")
+    public void deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
-        return ResponseEntity.ok("Customer deleted successfully");
     }
 }

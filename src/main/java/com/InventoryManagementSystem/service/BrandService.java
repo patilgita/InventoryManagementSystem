@@ -1,12 +1,16 @@
 package com.InventoryManagementSystem.service;
 
 import com.InventoryManagementSystem.entity.Brand;
+
 import java.util.List;
 
 public interface BrandService {
-    Brand createBrand(Brand brand);
-    Brand getBrandById(Long id);
+
+    Brand saveBrand(Brand brand);
+
     List<Brand> getAllBrands();
-    Brand updateBrand(Long id, Brand brand);
+
+    Brand getBrandById(Long id);
+
     void deleteBrand(Long id);
 }

@@ -20,6 +20,7 @@ public class Payment {
     private Long id;
 
     private double amount;
+
     private LocalDate paymentDate;
 
     @Enumerated(EnumType.STRING)
@@ -34,8 +35,6 @@ public class Payment {
     private Order order;
 
     public Payment() {
-        this.paymentDate = LocalDate.now();
+        this.paymentDate = LocalDate.now(); // auto date
     }
-
-
 }

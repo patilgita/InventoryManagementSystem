@@ -2,44 +2,35 @@ package com.InventoryManagementSystem.controller;
 
 import com.InventoryManagementSystem.entity.Shipment;
 import com.InventoryManagementSystem.service.ShipmentService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/shipments")
 public class ShipmentController {
 
-    private final ShipmentService shipmentService;
+    @Autowired
+    private ShipmentService shipmentService;
 
-    public ShipmentController(ShipmentService shipmentService) {
-        this.shipmentService = shipmentService;
+    @PostMapping
+    public Shipment createShipment(@RequestBody Shipment shipment) {
+        return shipmentService.saveShipment(shipment);
     }
 
-    @PostMapping("/createShipment")
-    public ResponseEntity<Shipment> createShipment(@RequestBody Shipment shipment) {
-        return ResponseEntity.ok(shipmentService.createShipment(shipment));
+    @GetMapping
+    public List<Shipment> getAllShipments() {
+        return shipmentService.getAllShipments();
     }
 
-    @GetMapping("/getallShipment")
-    public ResponseEntity<List<Shipment>> getAllShipments() {
-        return ResponseEntity.ok(shipmentService.getAllShipments());
+    @GetMapping("/{id}")
+    public Shipment getShipmentById(@PathVariable Long id) {
+        return shipmentService.getShipmentById(id);
     }
 
-    @GetMapping("getShipmentById/{id}")
-    public ResponseEntity<Shipment> getShipmentById(@PathVariable Long id) {
-        return ResponseEntity.ok(shipmentService.getShipmentById(id));
-    }
-
-    @PutMapping("/updateShipment/{id}")
-    public ResponseEntity<Shipment> updateShipment(@PathVariable Long id,
-                                                   @RequestBody Shipment shipment) {
-        return ResponseEntity.ok(shipmentService.updateShipment(id, shipment));
-    }
-
-    @DeleteMapping("/DeleteShipment/{id}")
-    public ResponseEntity<String> deleteShipment(@PathVariable Long id) {
+    @DeleteMapping("/{id}")
+    public void deleteShipment(@PathVariable Long id) {
         shipmentService.deleteShipment(id);
-        return ResponseEntity.ok("Deleted Successfully");
     }
 }

@@ -6,13 +6,11 @@ import java.util.List;
 
 public interface VendorService {
 
-    Vendor createVendor(Vendor vendor);
-
-    Vendor getVendorById(Long id);
+    Vendor saveVendor(Vendor vendor);
 
     List<Vendor> getAllVendors();
 
-    Vendor updateVendor(Long id, Vendor vendor);
+    Vendor getVendorById(Long id);
 
     void deleteVendor(Long id);
 }

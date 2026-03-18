@@ -2,52 +2,35 @@ package com.InventoryManagementSystem.controller;
 
 import com.InventoryManagementSystem.entity.Product;
 import com.InventoryManagementSystem.service.ProductService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 public class ProductController {
 
-    private final ProductService productService;
+    @Autowired
+    private ProductService productService;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
+    @PostMapping
+    public Product createProduct(@RequestBody Product product) {
+        return productService.saveProduct(product);
     }
 
-    @PostMapping("/createProduct")
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        return ResponseEntity.ok(productService.createProduct(product));
+    @GetMapping
+    public List<Product> getAllProducts() {
+        return productService.getAllProducts();
     }
 
-    @GetMapping("/getProductById/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        return ResponseEntity.ok(productService.getProductById(id));
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable Long id) {
+        return productService.getProductById(id);
     }
 
-    @GetMapping("/getAllProducts")
-    public ResponseEntity<List<Product>> getAllProducts() {
-        return ResponseEntity.ok(productService.getAllProducts());
-    }
-
-    // ✅ Optional search
-    @GetMapping("/search")
-    public ResponseEntity<List<Product>> searchProducts(@RequestParam String name) {
-        return ResponseEntity.ok(productService.searchProductsByName(name));
-    }
-
-    @PutMapping("/updateProduct/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id,
-                                                 @RequestBody Product product) {
-        return ResponseEntity.ok(productService.updateProduct(id, product));
-    }
-
-    @DeleteMapping("/deleteProduct/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
-        return ResponseEntity.ok("Product deleted successfully");
     }
 }
