@@ -20,7 +20,6 @@ public class UnitType {
     private String unitType;   // ✅ KG, Litre, Piece
 
     @OneToMany(mappedBy = "unitType")
-    @JsonManagedReference
     private List<Product> products;
 
     public UnitType() {}
