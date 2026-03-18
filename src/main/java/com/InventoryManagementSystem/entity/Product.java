@@ -34,11 +34,16 @@ public class Product {
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
-    // ✅ ADD THIS (IMPORTANT FIX)
     @ManyToOne
     @JoinColumn(name = "vendor_id")
     @JsonBackReference
     private Vendor vendor;
+
+    // ✅ IMPORTANT FIX (UnitType add)
+    @ManyToOne
+    @JoinColumn(name = "unit_type_id")
+    @JsonBackReference
+    private UnitType unitType;
 
     public Product() {}
 }
