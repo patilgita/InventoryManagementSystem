@@ -8,28 +8,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/payments")
+@RequestMapping("/payments")
 public class PaymentController {
 
     @Autowired
     private PaymentService paymentService;
 
-    @PostMapping
+    @PostMapping("/createPayment")
     public Payment createPayment(@RequestBody Payment payment) {
         return paymentService.savePayment(payment);
     }
 
-    @GetMapping
+    @GetMapping("/getAllPayments")
     public List<Payment> getAllPayments() {
         return paymentService.getAllPayments();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getPaymentById/{id}")
     public Payment getPaymentById(@PathVariable Long id) {
         return paymentService.getPaymentById(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deletePayment/{id}")
     public void deletePayment(@PathVariable Long id) {
         paymentService.deletePayment(id);
     }

@@ -8,28 +8,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/order-items")
+@RequestMapping("/order-items")
 public class OrderItemController {
 
     @Autowired
     private OrderItemService orderItemService;
 
-    @PostMapping
+    @PostMapping("/createOrderItem")
     public OrderItem createOrderItem(@RequestBody OrderItem orderItem) {
         return orderItemService.saveOrderItem(orderItem);
     }
 
-    @GetMapping
+    @GetMapping("/getAllOrderItems")
     public List<OrderItem> getAllOrderItems() {
         return orderItemService.getAllOrderItems();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getOrderItemById/{id}")
     public OrderItem getOrderItemById(@PathVariable Long id) {
         return orderItemService.getOrderItemById(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteOrderItem/{id}")
     public void deleteOrderItem(@PathVariable Long id) {
         orderItemService.deleteOrderItem(id);
     }

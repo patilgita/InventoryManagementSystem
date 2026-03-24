@@ -8,28 +8,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/unit-types")
+@RequestMapping("/unit-types")
 public class UnitTypeController {
 
     @Autowired
     private UnitTypeService unitTypeService;
 
-    @PostMapping
+    @PostMapping("/createUnitType")
     public UnitType createUnitType(@RequestBody UnitType unitType) {
         return unitTypeService.saveUnitType(unitType);
     }
 
-    @GetMapping
+    @GetMapping("/getAllUnitTypes")
     public List<UnitType> getAllUnitTypes() {
         return unitTypeService.getAllUnitTypes();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getUnitTypeById/{id}")
     public UnitType getUnitTypeById(@PathVariable Long id) {
         return unitTypeService.getUnitTypeById(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteUnitType/{id}")
     public void deleteUnitType(@PathVariable Long id) {
         unitTypeService.deleteUnitType(id);
     }

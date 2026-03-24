@@ -9,28 +9,28 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/api/brands")
+@RequestMapping("/brands")
 public class BrandController {
 
     @Autowired
     private BrandService brandService;
 
-    @PostMapping
+    @PostMapping("/createBrand")
     public Brand createBrand(@RequestBody Brand brand) {
         return brandService.saveBrand(brand);
     }
 
-    @GetMapping
+    @GetMapping("/getAllBrands")
     public List<Brand> getAllBrands() {
         return brandService.getAllBrands();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getBrandById/{id}")
     public Brand getBrandById(@PathVariable Long id) {
         return brandService.getBrandById(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteBrand/{id}")
     public void deleteBrand(@PathVariable Long id) {
         brandService.deleteBrand(id);
     }

@@ -21,11 +21,9 @@ public class Brand {
 
     @ManyToOne
     @JoinColumn(name = "vendor_id")
-    @JsonIgnore
     private Vendor vendor;
 
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<Product> products;
 
     public Brand() {}

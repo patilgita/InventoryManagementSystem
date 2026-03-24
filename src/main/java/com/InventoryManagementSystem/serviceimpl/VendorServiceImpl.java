@@ -1,4 +1,4 @@
-package com.InventoryManagementSystem.service.impl;
+package com.InventoryManagementSystem.serviceimpl;
 
 import com.InventoryManagementSystem.entity.Vendor;
 import com.InventoryManagementSystem.repository.VendorRepository;
@@ -27,6 +27,11 @@ public class VendorServiceImpl implements VendorService {
     @Override
     public Vendor getVendorById(Long id) {
         return vendorRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Vendor updateVendor(Long id, Vendor vendor) {
+        return null;
     }
 
     @Override

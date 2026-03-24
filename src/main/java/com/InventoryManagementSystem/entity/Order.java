@@ -30,11 +30,9 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    @JsonBackReference
     private Customer customer;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<OrderItem> orderItems;
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
