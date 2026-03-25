@@ -18,8 +18,12 @@ public class Vendor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String vendorName;
+
     private String companyName;
+
+    @Column(unique = true)
     private String gstNo;
 
     private String landmark;
@@ -30,16 +34,15 @@ public class Vendor {
     private State state;
 
     private String pincode;
+
+    @Column(unique = true)
     private String email;
+
     private String phone;
 
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Product> products;
-
-    @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Brand> brands;
 
     public Vendor() {}
 }
