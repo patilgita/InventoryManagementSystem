@@ -17,7 +17,7 @@ public class UnitType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String unitType;   // ✅ KG, Litre, Piece
+    private String unitType;   //KG, Litre, Piece
 
     @OneToMany(mappedBy = "unitType")
     private List<Product> products;

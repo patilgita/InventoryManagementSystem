@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service   // 🔥 VERY IMPORTANT
+@Service
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
