@@ -19,7 +19,7 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double amount;
+    private Double amount;
 
     private LocalDate paymentDate;
 
@@ -31,9 +31,11 @@ public class Payment {
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
+    @JsonBackReference
     private Order order;
 
-    public Payment() {
-        this.paymentDate = LocalDate.now(); // auto date
+    public Payment()
+    {
+        this.paymentDate = LocalDate.now();
     }
 }

@@ -15,8 +15,9 @@ public class PaymentController {
     private PaymentService paymentService;
 
     @PostMapping("/createPayment")
-    public Payment createPayment(@RequestBody Payment payment) {
-        return paymentService.savePayment(payment);
+    public Payment createPayment(@RequestParam Long orderId,
+                                 @RequestBody Payment payment) {
+        return paymentService.createPayment(orderId, payment);
     }
 
     @GetMapping("/getAllPayments")
@@ -30,7 +31,8 @@ public class PaymentController {
     }
 
     @DeleteMapping("/deletePayment/{id}")
-    public void deletePayment(@PathVariable Long id) {
+    public String deletePayment(@PathVariable Long id) {
         paymentService.deletePayment(id);
+        return "Payment deleted successfully";
     }
 }

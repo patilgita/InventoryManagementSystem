@@ -38,8 +38,8 @@ public class OrderItem {
 
         if (product != null && quantity != null && quantity > 0) {
 
-            // 1. Get price from product
-            this.price = product.getPrice() != null ? product.getPrice() : 0.0;
+            // 1. Get price
+            this.price = (product.getPrice() != null) ? product.getPrice() : 0.0;
 
             // 2. Calculate GST
             if (Boolean.TRUE.equals(product.getGstApplicable())
@@ -50,7 +50,7 @@ public class OrderItem {
                 this.gstAmount = 0.0;
             }
 
-            // 3. Calculate total price
+            // 3. Total price
             this.totalPrice = (price * quantity) + gstAmount;
 
         } else {
@@ -59,4 +59,25 @@ public class OrderItem {
             this.totalPrice = 0.0;
         }
     }
+
+    // 💸 Discount Calculation (MRP - Price)
+    @Transient
+    public Double getDiscountAmount() {
+        if (product != null && product.getMrp() != null && price != null && quantity != null) {
+            return (product.getMrp() - price) * quantity;
+        }
+        return 0.0;
+    }
+
+    // 🇮🇳 GST Split
+    @Transient
+    public Double getCgst() {
+        return gstAmount != null ? gstAmount / 2 : 0.0;
+    }
+
+    @Transient
+    public Double getSgst() {
+        return gstAmount != null ? gstAmount / 2 : 0.0;
+    }
 }
+

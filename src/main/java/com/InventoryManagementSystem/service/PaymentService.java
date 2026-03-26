@@ -1,12 +1,11 @@
 package com.InventoryManagementSystem.service;
 
 import com.InventoryManagementSystem.entity.Payment;
-
 import java.util.List;
 
 public interface PaymentService {
 
-    Payment savePayment(Payment payment);
+    Payment createPayment(Long orderId, Payment payment);
 
     List<Payment> getAllPayments();
 

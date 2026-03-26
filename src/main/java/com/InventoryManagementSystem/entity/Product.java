@@ -20,33 +20,50 @@ public class Product {
     private String productName;
 
     private Double price;
-
     private Double mrp;
 
-    private Boolean gstApplicable;
+    // 🔥 Stock field
+    private Integer stock;
 
+    // 🔥 Dropdown fields
+    private String size;
+    private String unit;
+    private String color;
+
+    private Boolean gstApplicable = false;
     private Double gstPercentage;
 
     private LocalDate productAddedDate;
 
-
-    @ManyToOne
+    // 🔗 Relations
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_type_id")
     private ProductType productType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vendor_id")
     @JsonIgnore
     private Vendor vendor;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "unit_type_id")
     @JsonIgnore
     private UnitType unitType;
 
     public Product() {}
+
+    @PrePersist
+    public void setDate() {
+        this.productAddedDate = LocalDate.now();
+    }
+
+    @Transient
+    public Boolean getAvailable() {
+        return stock != null && stock > 0;
+    }
 }
+

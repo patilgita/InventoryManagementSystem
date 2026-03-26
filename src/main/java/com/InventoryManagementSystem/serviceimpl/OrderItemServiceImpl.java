@@ -1,9 +1,12 @@
-package com.InventoryManagementSystem.service.impl;
+package com.InventoryManagementSystem.serviceimpl;
 
+import com.InventoryManagementSystem.entity.Order;
 import com.InventoryManagementSystem.entity.OrderItem;
+import com.InventoryManagementSystem.entity.Product;
 import com.InventoryManagementSystem.repository.OrderItemRepository;
+import com.InventoryManagementSystem.repository.OrderRepository;
+import com.InventoryManagementSystem.repository.ProductRepository;
 import com.InventoryManagementSystem.service.OrderItemService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,20 +14,33 @@ import java.util.List;
 @Service
 public class OrderItemServiceImpl implements OrderItemService {
 
-    @Autowired
-    private OrderItemRepository orderItemRepository;
+    private final OrderItemRepository orderItemRepository;
+    private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
+
+    public OrderItemServiceImpl(OrderItemRepository orderItemRepository,
+                                OrderRepository orderRepository,
+                                ProductRepository productRepository) {
+        this.orderItemRepository = orderItemRepository;
+        this.orderRepository = orderRepository;
+        this.productRepository = productRepository;
+    }
 
     @Override
-    public OrderItem saveOrderItem(OrderItem orderItem) {
+    public OrderItem createOrderItem(Long orderId, Long productId, Integer quantity) {
 
-        // GST + Total calculation
-        double base = orderItem.getPrice() * orderItem.getQuantity();
-        double gst = base * 0.18; // 18% GST
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
 
-        orderItem.setGstAmount(gst);
-        orderItem.setTotalPrice(base + gst);
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
 
-        return orderItemRepository.save(orderItem);
+        OrderItem item = new OrderItem();
+        item.setOrder(order);
+        item.setProduct(product);
+        item.setQuantity(quantity);
+
+        return orderItemRepository.save(item);
     }
 
     @Override
@@ -34,7 +50,8 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     @Override
     public OrderItem getOrderItemById(Long id) {
-        return orderItemRepository.findById(id).orElse(null);
+        return orderItemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("OrderItem not found"));
     }
 
     @Override

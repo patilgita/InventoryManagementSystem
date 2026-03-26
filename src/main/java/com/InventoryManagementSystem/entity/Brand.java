@@ -1,5 +1,5 @@
 package com.InventoryManagementSystem.entity;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +20,7 @@ public class Brand {
     private String brandName;
 
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Product> products;
 
     public Brand() {}

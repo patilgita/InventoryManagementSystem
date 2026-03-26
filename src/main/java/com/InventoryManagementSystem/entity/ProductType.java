@@ -20,15 +20,11 @@ public class ProductType {
     @Column(name = "type_name", unique = true, nullable = false)
     private String typeName;
 
-    // 🔥 NEW: Category relation (IMPORTANT)
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
-    private ProductCategory category;
 
-    // Existing relation
     @OneToMany(mappedBy = "productType", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Product> products;
 
     public ProductType() {}
 }
+

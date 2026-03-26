@@ -1,9 +1,10 @@
-package com.InventoryManagementSystem.service.impl;
+package com.InventoryManagementSystem.serviceimpl;
 
+import com.InventoryManagementSystem.entity.Order;
 import com.InventoryManagementSystem.entity.Payment;
+import com.InventoryManagementSystem.repository.OrderRepository;
 import com.InventoryManagementSystem.repository.PaymentRepository;
 import com.InventoryManagementSystem.service.PaymentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,16 +12,22 @@ import java.util.List;
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
-    @Autowired
-    private PaymentRepository paymentRepository;
+    private final PaymentRepository paymentRepository;
+    private final OrderRepository orderRepository;
+
+    public PaymentServiceImpl(PaymentRepository paymentRepository,
+                              OrderRepository orderRepository) {
+        this.paymentRepository = paymentRepository;
+        this.orderRepository = orderRepository;
+    }
 
     @Override
-    public Payment savePayment(Payment payment) {
+    public Payment createPayment(Long orderId, Payment payment) {
 
-        // ensure date is set
-        if (payment.getPaymentDate() == null) {
-            payment.setPaymentDate(java.time.LocalDate.now());
-        }
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        payment.setOrder(order);
 
         return paymentRepository.save(payment);
     }
@@ -32,7 +39,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment getPaymentById(Long id) {
-        return paymentRepository.findById(id).orElse(null);
+        return paymentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Payment not found"));
     }
 
     @Override

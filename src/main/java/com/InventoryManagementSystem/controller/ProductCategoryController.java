@@ -1,7 +1,5 @@
 package com.InventoryManagementSystem.controller;
 
-import com.InventoryManagementSystem.entity.ProductCategory;
-import com.InventoryManagementSystem.service.ProductCategoryService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

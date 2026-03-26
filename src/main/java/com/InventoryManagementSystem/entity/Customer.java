@@ -1,7 +1,7 @@
 package com.InventoryManagementSystem.entity;
 
 import com.InventoryManagementSystem.Enum.State;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,11 +28,13 @@ public class Customer {
 
     @Enumerated(EnumType.STRING)
     private State state;
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vendor_id")
     private Vendor vendor;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Order> orders;
 
     public Customer() {}

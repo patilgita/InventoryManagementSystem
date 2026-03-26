@@ -1,12 +1,11 @@
 package com.InventoryManagementSystem.service;
 
 import com.InventoryManagementSystem.entity.OrderItem;
-
 import java.util.List;
 
 public interface OrderItemService {
 
-    OrderItem saveOrderItem(OrderItem orderItem);
+    OrderItem createOrderItem(Long orderId, Long productId, Integer quantity);
 
     List<OrderItem> getAllOrderItems();
 

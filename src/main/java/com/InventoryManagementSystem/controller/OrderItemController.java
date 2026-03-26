@@ -14,9 +14,12 @@ public class OrderItemController {
     @Autowired
     private OrderItemService orderItemService;
 
+
     @PostMapping("/createOrderItem")
-    public OrderItem createOrderItem(@RequestBody OrderItem orderItem) {
-        return orderItemService.saveOrderItem(orderItem);
+    public OrderItem createOrderItem(@RequestParam Long orderId,
+                                     @RequestParam Long productId,
+                                     @RequestParam Integer quantity) {
+        return orderItemService.createOrderItem(orderId, productId, quantity);
     }
 
     @GetMapping("/getAllOrderItems")
@@ -30,7 +33,8 @@ public class OrderItemController {
     }
 
     @DeleteMapping("/deleteOrderItem/{id}")
-    public void deleteOrderItem(@PathVariable Long id) {
+    public String deleteOrderItem(@PathVariable Long id) {
         orderItemService.deleteOrderItem(id);
+        return "OrderItem deleted successfully";
     }
 }

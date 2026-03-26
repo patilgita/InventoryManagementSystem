@@ -1,7 +1,7 @@
 package com.InventoryManagementSystem.entity;
 
 import com.InventoryManagementSystem.Enum.OrderStatus;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -23,19 +23,22 @@ public class Order {
 
     private LocalDate orderDate;
     private LocalTime orderTime;
-    private double totalAmount;
+
+    private Double totalAmount;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<OrderItem> orderItems;
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Shipment shipment;
 
     public Order() {}
