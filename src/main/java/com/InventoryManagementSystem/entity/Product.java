@@ -21,6 +21,8 @@ public class Product {
 
     private Double price;
 
+    private Double mrp;
+
     private Boolean gstApplicable;
 
     private Double gstPercentage;
