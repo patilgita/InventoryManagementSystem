@@ -36,7 +36,7 @@ public class Shipment {
     private String customerMobile;
     private String customerAddress;
 
-    private String companyName; // vendor/company
+    private String companyName;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id", nullable = false)
