@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/vendors")
 public class VendorController {
 
     @Autowired
@@ -31,7 +30,8 @@ public class VendorController {
     }
 
     @PutMapping("/updateVendor/{id}")
-    public Vendor updateVendor(@PathVariable Long id, @RequestBody Vendor vendor) {
+    public Vendor updateVendor(@PathVariable Long id, @RequestBody Vendor vendor)
+    {
         return vendorService.updateVendor(id, vendor);
     }
 

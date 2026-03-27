@@ -1,16 +1,17 @@
 package com.InventoryManagementSystem.service;
 
-import com.InventoryManagementSystem.entity.Customer;
+import com.InventoryManagementSystem.DTO.CustomerRequestDTO;
+import com.InventoryManagementSystem.DTO.CustomerResponseDTO;
 
 import java.util.List;
 
 public interface CustomerService {
 
-    Customer saveCustomer(Customer customer);
+    CustomerResponseDTO saveCustomer(CustomerRequestDTO dto);
 
-    List<Customer> getAllCustomers();
+    List<CustomerResponseDTO> getAllCustomers();
 
-    Customer getCustomerById(Long id);
+    CustomerResponseDTO getCustomerById(Long id);
 
     void deleteCustomer(Long id);
 }

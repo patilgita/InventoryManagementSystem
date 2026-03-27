@@ -1,6 +1,7 @@
 package com.InventoryManagementSystem.controller;
 
-import com.InventoryManagementSystem.entity.Customer;
+import com.InventoryManagementSystem.DTO.CustomerRequestDTO;
+import com.InventoryManagementSystem.DTO.CustomerResponseDTO;
 import com.InventoryManagementSystem.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,24 +10,24 @@ import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/customers")
 public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
 
+
     @PostMapping("/createCustomer")
-    public Customer createCustomer(@RequestBody Customer customer) {
-        return customerService.saveCustomer(customer);
+    public CustomerResponseDTO createCustomer(@RequestBody CustomerRequestDTO dto) {
+        return customerService.saveCustomer(dto);
     }
 
     @GetMapping("/getAllCustomers")
-    public List<Customer> getAllCustomers() {
+    public List<CustomerResponseDTO> getAllCustomers() {
         return customerService.getAllCustomers();
     }
 
     @GetMapping("/getCustomerById/{id}")
-    public Customer getCustomerById(@PathVariable Long id) {
+    public CustomerResponseDTO getCustomerById(@PathVariable Long id) {
         return customerService.getCustomerById(id);
     }
 
