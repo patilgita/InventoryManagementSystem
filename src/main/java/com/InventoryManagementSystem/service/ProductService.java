@@ -1,7 +1,6 @@
 package com.InventoryManagementSystem.service;
 
 import com.InventoryManagementSystem.entity.Product;
-
 import java.util.List;
 
 public interface ProductService {

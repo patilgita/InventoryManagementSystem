@@ -6,7 +6,6 @@ import com.InventoryManagementSystem.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -17,16 +16,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product saveProduct(Product product) {
-
-        // Auto set date
-        product.setProductAddedDate(LocalDate.now());
-
-        // GST logic (optional)
-        if (product.getGstApplicable() != null && product.getGstApplicable()) {
-            double gst = product.getPrice() * (product.getGstPercentage() / 100);
-            product.setPrice(product.getPrice() + gst);
-        }
-
         return productRepository.save(product);
     }
 
@@ -37,7 +26,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProductById(Long id) {
-        return productRepository.findById(id).orElse(null);
+        return productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
     }
 
     @Override

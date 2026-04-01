@@ -7,7 +7,7 @@ public interface VendorService {
 
     Vendor getVendorById(Long id);
 
-    Vendor updateVendor(Long id, Vendor vendor); // ✅ added
+    Vendor updateVendor(Long id, Vendor vendor);
 
     void deleteVendor(Long id);
 }

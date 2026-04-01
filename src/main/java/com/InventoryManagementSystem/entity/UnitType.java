@@ -1,5 +1,6 @@
 package com.InventoryManagementSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -17,9 +18,10 @@ public class UnitType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String unitType;   //KG, Litre, Piece
+    private String unitType;
 
     @OneToMany(mappedBy = "unitType")
+    @JsonIgnore
     private List<Product> products;
 
     public UnitType() {}

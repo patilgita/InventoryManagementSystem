@@ -32,7 +32,7 @@ public class Product {
     private String color;
     String unit;
 
-    private Integer stock;   // stock quantity
+    private Integer stock;
 
     @Transient
     private Boolean available;
@@ -54,12 +54,10 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "vendor_id")
-    @JsonIgnore
     private Vendor vendor;
 
     @ManyToOne
     @JoinColumn(name = "unit_type_id")
-    @JsonIgnore
     private UnitType unitType;
 
     public Product() {

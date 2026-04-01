@@ -31,9 +31,24 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public Vendor updateVendor(Long id, Vendor vendor) {
-        return null;
-    }
 
+        Vendor existing = vendorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Vendor Not Found: " + id));
+
+
+        existing.setVendorName(vendor.getVendorName());
+        existing.setCompanyName(vendor.getCompanyName());
+        existing.setGstNo(vendor.getGstNo());
+        existing.setLandmark(vendor.getLandmark());
+        existing.setCity(vendor.getCity());
+        existing.setTaluka(vendor.getTaluka());
+        existing.setState(vendor.getState());
+        existing.setPincode(vendor.getPincode());
+        existing.setEmail(vendor.getEmail());
+        existing.setPhone(vendor.getPhone());
+
+        return vendorRepository.save(existing);
+    }
     @Override
     public void deleteVendor(Long id) {
         vendorRepository.deleteById(id);

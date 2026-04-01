@@ -13,5 +13,10 @@ public interface CustomerService {
 
     CustomerResponseDTO getCustomerById(Long id);
 
+    CustomerResponseDTO updateCustomer(Long id );
+
+    // ✅ FIXED METHOD
+    CustomerResponseDTO updateCustomer(Long id, CustomerRequestDTO dto);
+
     void deleteCustomer(Long id);
 }

@@ -79,6 +79,47 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public CustomerResponseDTO updateCustomer(Long id) {
+        return null;
+    }
+
+    // ✅ FIXED METHOD
+    @Override
+    public CustomerResponseDTO updateCustomer(Long id, CustomerRequestDTO dto) {
+
+        if (id == null) {
+            throw new RuntimeException("Customer ID must not be null");
+        }
+
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        customer.setCustomerName(dto.getCustomerName());
+        customer.setLandmark(dto.getLandmark());
+        customer.setCity(dto.getCity());
+        customer.setTaluka(dto.getTaluka());
+        customer.setPincode(dto.getPincode());
+        customer.setEmail(dto.getEmail());
+        customer.setPhone(dto.getPhone());
+
+        try {
+            customer.setState(State.valueOf(dto.getState().toUpperCase()));
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid State value");
+        }
+
+        if (dto.getVendorId() != null) {
+            Vendor vendor = vendorRepository.findById(dto.getVendorId())
+                    .orElseThrow(() -> new RuntimeException("Vendor not found"));
+            customer.setVendor(vendor);
+        }
+
+        Customer updated = customerRepository.save(customer);
+
+        return mapToResponse(updated);
+    }
+
+    @Override
     public void deleteCustomer(Long id) {
 
         if (id == null) {
