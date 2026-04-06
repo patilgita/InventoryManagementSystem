@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,7 +19,6 @@ public class Product {
     private Long id;
 
     private String productName;
-
     private Double price;
     private Double mrp;
 
@@ -26,11 +26,6 @@ public class Product {
     private Double gstPercentage;
 
     private LocalDate productAddedDate;
-
-
-    private String size;
-    private String color;
-    String unit;
 
     private Integer stock;
 
@@ -49,16 +44,17 @@ public class Product {
     private ProductType productType;
 
     @ManyToOne
-    @JoinColumn(name = "brand_id")
     private Brand brand;
 
     @ManyToOne
-    @JoinColumn(name = "vendor_id")
     private Vendor vendor;
 
     @ManyToOne
-    @JoinColumn(name = "unit_type_id")
     private UnitType unitType;
+
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductAttributeValue> attributes;
 
     public Product() {
         this.productAddedDate = LocalDate.now();
