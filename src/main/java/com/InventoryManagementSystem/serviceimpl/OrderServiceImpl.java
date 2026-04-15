@@ -1,7 +1,12 @@
 package com.InventoryManagementSystem.serviceimpl;
 
+import com.InventoryManagementSystem.entity.Customer;
 import com.InventoryManagementSystem.entity.Order;
+import com.InventoryManagementSystem.entity.OrderItem;
+import com.InventoryManagementSystem.entity.Product;
+import com.InventoryManagementSystem.repository.CustomerRepository;
 import com.InventoryManagementSystem.repository.OrderRepository;
+import com.InventoryManagementSystem.repository.ProductRepository;
 import com.InventoryManagementSystem.service.OrderService;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +16,62 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final CustomerRepository customerRepository;
+    private final ProductRepository productRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository,
+                            CustomerRepository customerRepository,
+                            ProductRepository productRepository) {
         this.orderRepository = orderRepository;
+        this.customerRepository = customerRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
     public Order createOrder(Order order) {
+
+        // ✅ Fetch Customer
+        Customer customer = customerRepository.findById(order.getCustomer().getId())
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
+
+        order.setCustomer(customer);
+
+        double totalAmount = 0.0;
+
+        // ✅ Process Order Items
+        for (OrderItem item : order.getOrderItems()) {
+
+            Product product = productRepository.findById(item.getProduct().getId())
+                    .orElseThrow(() -> new RuntimeException("Product not found"));
+
+            item.setProduct(product);
+            item.setOrder(order);
+
+            // ✅ SAFE CALCULATION (NO NULL ERROR)
+            double price = product.getPrice() != null ? product.getPrice() : 0.0;
+            int qty = item.getQuantity() != null ? item.getQuantity() : 0;
+
+            double gst = 0.0;
+
+            if (Boolean.TRUE.equals(product.getGstApplicable())
+                    && product.getGstPercentage() != null) {
+
+                gst = (price * qty * product.getGstPercentage()) / 100;
+            }
+
+            double total = (price * qty) + gst;
+
+            item.setPrice(price);
+            item.setGstAmount(gst);
+            item.setTotalPrice(total);
+
+            totalAmount += total;
+        }
+
+        // ✅ Set total amount
+        order.setTotalAmount(totalAmount);
+
+        // ✅ Save Order
         return orderRepository.save(order);
     }
 
@@ -28,7 +82,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order getOrderById(Long id) {
-        return orderRepository.findById(id).orElse(null);
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
     }
 
     @Override

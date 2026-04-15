@@ -15,5 +15,5 @@ public class CustomerResponseDTO {
 
     private Long vendorId;
     private String vendorName;
-    private String comapanyName;
+    private String companyName;
 }

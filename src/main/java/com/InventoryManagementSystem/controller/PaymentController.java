@@ -16,22 +16,26 @@ public class PaymentController {
 
     @PostMapping("/createPayment")
     public Payment createPayment(@RequestParam Long orderId,
-                                 @RequestBody Payment payment) {
+                                 @RequestBody Payment payment)
+    {
         return paymentService.createPayment(orderId, payment);
     }
 
     @GetMapping("/getAllPayments")
-    public List<Payment> getAllPayments() {
+    public List<Payment> getAllPayments()
+    {
         return paymentService.getAllPayments();
     }
 
     @GetMapping("/getPaymentById/{id}")
-    public Payment getPaymentById(@PathVariable Long id) {
+    public Payment getPaymentById(@PathVariable Long id)
+    {
         return paymentService.getPaymentById(id);
     }
 
     @DeleteMapping("/deletePayment/{id}")
-    public String deletePayment(@PathVariable Long id) {
+    public String deletePayment(@PathVariable Long id)
+    {
         paymentService.deletePayment(id);
         return "Payment deleted successfully";
     }

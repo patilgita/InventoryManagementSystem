@@ -14,22 +14,27 @@ public class UnitTypeController {
     private UnitTypeService unitTypeService;
 
     @PostMapping("/createUnitType")
-    public UnitType createUnitType(@RequestBody UnitType unitType) {
+    public UnitType createUnitType(@RequestBody UnitType unitType)
+    {
         return unitTypeService.saveUnitType(unitType);
     }
 
     @GetMapping("/getAllUnitTypes")
-    public List<UnitType> getAllUnitTypes() {
+    public List<UnitType> getAllUnitTypes()
+    {
         return unitTypeService.getAllUnitTypes();
     }
 
     @GetMapping("/getUnitTypeById/{id}")
-    public UnitType getUnitTypeById(@PathVariable Long id) {
+    public UnitType getUnitTypeById(@PathVariable Long id)
+    {
         return unitTypeService.getUnitTypeById(id);
     }
 
     @DeleteMapping("/deleteUnitType/{id}")
-    public void deleteUnitType(@PathVariable Long id) {
+    public String deleteUnitType(@PathVariable Long id)
+    {
         unitTypeService.deleteUnitType(id);
+        return "UnitType ID " + id + " deleted successfully";
     }
 }

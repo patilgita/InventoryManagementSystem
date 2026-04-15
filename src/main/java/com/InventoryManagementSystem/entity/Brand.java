@@ -1,4 +1,5 @@
 package com.InventoryManagementSystem.entity;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -23,5 +24,6 @@ public class Brand {
     @JsonIgnore
     private List<Product> products;
 
-    public Brand() {}
+    public Brand() {
+    }
 }

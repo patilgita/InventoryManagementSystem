@@ -15,5 +15,9 @@ public class Attribute
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name; // Size, Color, Weight, RAM
+    private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "product_type_id")
+    private ProductType productType;
 }

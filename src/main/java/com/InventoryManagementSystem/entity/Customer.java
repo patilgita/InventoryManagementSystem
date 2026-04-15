@@ -36,6 +36,4 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Order> orders;
-
-    public Customer() {}
 }

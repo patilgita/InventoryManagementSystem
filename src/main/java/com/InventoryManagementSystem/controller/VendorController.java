@@ -15,17 +15,20 @@ public class VendorController {
     private VendorService vendorService;
 
     @PostMapping("/createVendor")
-    public Vendor createVendor(@RequestBody Vendor vendor) {
+    public Vendor createVendor(@RequestBody Vendor vendor)
+    {
         return vendorService.saveVendor(vendor);
     }
 
     @GetMapping("/getallVendor")
-    public List<Vendor> getAllVendors() {
+    public List<Vendor> getAllVendors()
+    {
         return vendorService.getAllVendors();
     }
 
     @GetMapping("/getbyIdVendor/{id}")
-    public Vendor getVendorById(@PathVariable Long id) {
+    public Vendor getVendorById(@PathVariable Long id)
+    {
         return vendorService.getVendorById(id);
     }
 
@@ -36,7 +39,8 @@ public class VendorController {
     }
 
     @DeleteMapping("/deleteVendor/{id}")
-    public ResponseEntity<String> deleteVendor(@PathVariable Long id) {
+    public ResponseEntity<String> deleteVendor(@PathVariable Long id)
+    {
         vendorService.deleteVendor(id);
         return ResponseEntity.ok("Vendor Deleted Successflly");
     }

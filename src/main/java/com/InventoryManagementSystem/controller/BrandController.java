@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class BrandController {
 
@@ -30,7 +29,8 @@ public class BrandController {
     }
 
     @DeleteMapping("/deleteBrand/{id}")
-    public void deleteBrand(@PathVariable Long id) {
+    public String deleteBrand(@PathVariable Long id) {
         brandService.deleteBrand(id);
+        return "Brand ID " + id + " deleted successfully";
     }
 }

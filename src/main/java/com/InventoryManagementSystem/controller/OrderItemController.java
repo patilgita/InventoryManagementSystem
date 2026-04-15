@@ -18,22 +18,26 @@ public class OrderItemController {
     @PostMapping("/createOrderItem")
     public OrderItem createOrderItem(@RequestParam Long orderId,
                                      @RequestParam Long productId,
-                                     @RequestParam Integer quantity) {
+                                     @RequestParam Integer quantity)
+    {
         return orderItemService.createOrderItem(orderId, productId, quantity);
     }
 
     @GetMapping("/getAllOrderItems")
-    public List<OrderItem> getAllOrderItems() {
+    public List<OrderItem> getAllOrderItems()
+    {
         return orderItemService.getAllOrderItems();
     }
 
     @GetMapping("/getOrderItemById/{id}")
-    public OrderItem getOrderItemById(@PathVariable Long id) {
+    public OrderItem getOrderItemById(@PathVariable Long id)
+    {
         return orderItemService.getOrderItemById(id);
     }
 
     @DeleteMapping("/deleteOrderItem/{id}")
-    public String deleteOrderItem(@PathVariable Long id) {
+    public String deleteOrderItem(@PathVariable Long id)
+    {
         orderItemService.deleteOrderItem(id);
         return "OrderItem deleted successfully";
     }

@@ -4,11 +4,10 @@ import com.InventoryManagementSystem.DTO.CustomerRequestDTO;
 import com.InventoryManagementSystem.DTO.CustomerResponseDTO;
 import com.InventoryManagementSystem.entity.Customer;
 import com.InventoryManagementSystem.entity.Vendor;
+import com.InventoryManagementSystem.Enum.State;
 import com.InventoryManagementSystem.repository.CustomerRepository;
 import com.InventoryManagementSystem.repository.VendorRepository;
 import com.InventoryManagementSystem.service.CustomerService;
-import com.InventoryManagementSystem.Enum.State;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setPhone(dto.getPhone());
 
         try {
-            customer.setState(State.valueOf(dto.getState().toUpperCase()));
+            customer.setState(State.valueOf(dto.getState().trim().toUpperCase()));
         } catch (Exception e) {
             throw new RuntimeException("Invalid State value");
         }
@@ -68,28 +67,15 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerResponseDTO getCustomerById(Long id) {
 
-        if (id == null) {
-            throw new RuntimeException("Customer ID must not be null");
-        }
-
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
 
         return mapToResponse(customer);
     }
 
-    @Override
-    public CustomerResponseDTO updateCustomer(Long id) {
-        return null;
-    }
 
-    // ✅ FIXED METHOD
     @Override
     public CustomerResponseDTO updateCustomer(Long id, CustomerRequestDTO dto) {
-
-        if (id == null) {
-            throw new RuntimeException("Customer ID must not be null");
-        }
 
         Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
@@ -103,7 +89,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setPhone(dto.getPhone());
 
         try {
-            customer.setState(State.valueOf(dto.getState().toUpperCase()));
+            customer.setState(State.valueOf(dto.getState().trim().toUpperCase()));
         } catch (Exception e) {
             throw new RuntimeException("Invalid State value");
         }
@@ -121,11 +107,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCustomer(Long id) {
-
-        if (id == null) {
-            throw new RuntimeException("Customer ID must not be null");
-        }
-
         customerRepository.deleteById(id);
     }
 
@@ -142,7 +123,7 @@ public class CustomerServiceImpl implements CustomerService {
         if (customer.getVendor() != null) {
             dto.setVendorId(customer.getVendor().getId());
             dto.setVendorName(customer.getVendor().getVendorName());
-            dto.setComapanyName(customer.getVendor().getCompanyName());
+            dto.setCompanyName(customer.getVendor().getCompanyName());
         }
 
         return dto;

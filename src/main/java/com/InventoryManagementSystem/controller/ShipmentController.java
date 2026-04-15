@@ -15,22 +15,26 @@ public class ShipmentController {
     private ShipmentService shipmentService;
 
     @PostMapping("/createShipment")
-    public Shipment createShipment(@RequestBody Shipment shipment) {
+    public Shipment createShipment(@RequestBody Shipment shipment)
+    {
         return shipmentService.saveShipment(shipment);
     }
 
     @GetMapping("/getAllShipments")
-    public List<Shipment> getAllShipments() {
+    public List<Shipment> getAllShipments()
+    {
         return shipmentService.getAllShipments();
     }
 
     @GetMapping("/getShipmentById/{id}")
-    public Shipment getShipmentById(@PathVariable Long id) {
+    public Shipment getShipmentById(@PathVariable Long id)
+    {
         return shipmentService.getShipmentById(id);
     }
 
     @DeleteMapping("/deleteShipment/{id}")
-    public void deleteShipment(@PathVariable Long id) {
+    public void deleteShipment(@PathVariable Long id)
+    {
         shipmentService.deleteShipment(id);
     }
 }
