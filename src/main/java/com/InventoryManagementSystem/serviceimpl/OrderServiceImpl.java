@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order createOrder(Order order) {
 
-        // ✅ Fetch Customer
+
         Customer customer = customerRepository.findById(order.getCustomer().getId())
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
 
@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
 
         double totalAmount = 0.0;
 
-        // ✅ Process Order Items
+
         for (OrderItem item : order.getOrderItems()) {
 
             Product product = productRepository.findById(item.getProduct().getId())
@@ -47,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
             item.setProduct(product);
             item.setOrder(order);
 
-            // ✅ SAFE CALCULATION (NO NULL ERROR)
+
             double price = product.getPrice() != null ? product.getPrice() : 0.0;
             int qty = item.getQuantity() != null ? item.getQuantity() : 0;
 
@@ -68,10 +68,10 @@ public class OrderServiceImpl implements OrderService {
             totalAmount += total;
         }
 
-        // ✅ Set total amount
+
         order.setTotalAmount(totalAmount);
 
-        // ✅ Save Order
+
         return orderRepository.save(order);
     }
 

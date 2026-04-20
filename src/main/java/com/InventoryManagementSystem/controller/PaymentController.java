@@ -37,6 +37,6 @@ public class PaymentController {
     public String deletePayment(@PathVariable Long id)
     {
         paymentService.deletePayment(id);
-        return "Payment deleted successfully";
+        return "Payment ID " + id + " deleted successfully";
     }
 }

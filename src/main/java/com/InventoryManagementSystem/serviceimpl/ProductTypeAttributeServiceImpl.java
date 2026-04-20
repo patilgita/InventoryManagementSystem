@@ -30,14 +30,14 @@ public class ProductTypeAttributeServiceImpl implements ProductTypeAttributeServ
         Long productTypeId = pta.getProductType().getId();
         Long attributeId = pta.getAttribute().getId();
 
-        // ✅ Fetch full objects from DB
+
         ProductType productType = productTypeRepository.findById(productTypeId)
                 .orElseThrow(() -> new RuntimeException("ProductType not found"));
 
         Attribute attribute = attributeRepository.findById(attributeId)
                 .orElseThrow(() -> new RuntimeException("Attribute not found"));
 
-        // ✅ Set full objects
+
         pta.setProductType(productType);
         pta.setAttribute(attribute);
 

@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class AttributeDTO {
 
-    private Long id;      // optional (update साठी उपयोगी)
-    private String name;  // Size, Color, Weight
+    private Long id;
+    private String name;
 
 }

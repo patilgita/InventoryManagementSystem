@@ -22,5 +22,5 @@ public class ProductAttributeValue {
     @JoinColumn(name = "attribute_id")
     private Attribute attribute;
 
-    private String value; // M, Black, 5kg, 128GB
+    private String value;
 }

@@ -7,5 +7,5 @@ public interface AttributeService {
 
     List<Attribute> getAttributesByProductType(Long productTypeId);
 
-    Attribute saveAttribute(Attribute attribute);  // ✅ ADD THIS
+    Attribute saveAttribute(Attribute attribute);
 }

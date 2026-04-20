@@ -24,7 +24,7 @@ public class AttributeServiceImpl implements AttributeService {
     private AttributeRepository attributeRepository;
 
     @Autowired
-    private ProductTypeRepository productTypeRepository; // ✅ NEW
+    private ProductTypeRepository productTypeRepository;
 
     @Override
     public List<Attribute> getAttributesByProductType(Long productTypeId) {

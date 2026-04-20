@@ -36,6 +36,6 @@ public class ProductTypeController {
     public String deleteProductType(@PathVariable Long id)
     {
         productTypeService.deleteProductType(id);
-        return "Id Deleted Successfully: " + id;
+        return "ProductType ID " + id + " deleted successfully";
     }
 }

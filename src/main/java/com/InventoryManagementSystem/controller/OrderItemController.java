@@ -25,6 +25,7 @@ public class OrderItemController {
 
     @GetMapping("/getAllOrderItems")
     public List<OrderItem> getAllOrderItems()
+
     {
         return orderItemService.getAllOrderItems();
     }
@@ -39,6 +40,6 @@ public class OrderItemController {
     public String deleteOrderItem(@PathVariable Long id)
     {
         orderItemService.deleteOrderItem(id);
-        return "OrderItem deleted successfully";
+        return "OrderItem ID " + id + " deleted successfully";
     }
 }

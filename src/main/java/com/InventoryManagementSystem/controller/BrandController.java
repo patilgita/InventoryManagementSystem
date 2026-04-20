@@ -14,22 +14,26 @@ public class BrandController {
     private BrandService brandService;
 
     @PostMapping("/createBrand")
-    public Brand createBrand(@RequestBody Brand brand) {
+    public Brand createBrand(@RequestBody Brand brand)
+    {
         return brandService.saveBrand(brand);
     }
 
     @GetMapping("/getAllBrands")
-    public List<Brand> getAllBrands() {
+    public List<Brand> getAllBrands()
+    {
         return brandService.getAllBrands();
     }
 
     @GetMapping("/getBrandById/{id}")
-    public Brand getBrandById(@PathVariable Long id) {
+    public Brand getBrandById(@PathVariable Long id)
+    {
         return brandService.getBrandById(id);
     }
 
     @DeleteMapping("/deleteBrand/{id}")
-    public String deleteBrand(@PathVariable Long id) {
+    public String deleteBrand(@PathVariable Long id)
+    {
         brandService.deleteBrand(id);
         return "Brand ID " + id + " deleted successfully";
     }

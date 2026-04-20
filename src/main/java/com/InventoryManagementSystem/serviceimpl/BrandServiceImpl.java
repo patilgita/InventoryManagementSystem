@@ -15,22 +15,26 @@ public class BrandServiceImpl implements BrandService {
     private BrandRepository brandRepository;
 
     @Override
-    public Brand saveBrand(Brand brand) {
+    public Brand saveBrand(Brand brand)
+    {
         return brandRepository.save(brand);
     }
 
     @Override
-    public List<Brand> getAllBrands() {
+    public List<Brand> getAllBrands()
+    {
         return brandRepository.findAll();
     }
 
     @Override
-    public Brand getBrandById(Long id) {
+    public Brand getBrandById(Long id)
+    {
         return brandRepository.findById(id).orElse(null);
     }
 
     @Override
-    public void deleteBrand(Long id) {
+    public void deleteBrand(Long id)
+    {
         brandRepository.deleteById(id);
     }
 }

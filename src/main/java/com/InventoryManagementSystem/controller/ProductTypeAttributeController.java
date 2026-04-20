@@ -14,23 +14,27 @@ public class ProductTypeAttributeController {
     private ProductTypeAttributeService service;
 
     @PostMapping("/createProductTypeAttribute")
-    public ProductTypeAttribute create(@RequestBody ProductTypeAttribute pta) {
+    public ProductTypeAttribute create(@RequestBody ProductTypeAttribute pta)
+    {
         return service.save(pta);
     }
 
     @GetMapping("/getAllProductTypeAttribute")
-    public List<ProductTypeAttribute> getAll() {
+    public List<ProductTypeAttribute> getAll()
+    {
         return service.getAll();
     }
 
     @GetMapping("/getByIdProductTypeAttribute/{id}")
-    public ProductTypeAttribute getById(@PathVariable Long id) {
+    public ProductTypeAttribute getById(@PathVariable Long id)
+    {
         return service.getById(id);
     }
 
     @DeleteMapping("/deleteProductTypeAttribute/{id}")
-    public String delete(@PathVariable Long id) {
+    public String delete(@PathVariable Long id)
+    {
         service.delete(id);
-        return " Id Deleted successfully";
+        return " ProductTypeAttribute ID " + id + " deleted successfully";
     }
 }

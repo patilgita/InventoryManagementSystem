@@ -14,23 +14,27 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("/createProduct")
-    public Product createProduct(@RequestBody Product product) {
+    public Product createProduct(@RequestBody Product product)
+    {
         return productService.saveProduct(product);
     }
 
     @GetMapping("/getAllProducts")
-    public List<Product> getAllProducts() {
+    public List<Product> getAllProducts()
+    {
         return productService.getAllProducts();
     }
 
     @GetMapping("/getProductById/{id}")
-    public Product getProductById(@PathVariable Long id) {
+    public Product getProductById(@PathVariable Long id)
+    {
         return productService.getProductById(id);
     }
 
     @DeleteMapping("/deleteProduct/{id}")
-    public String deleteProduct(@PathVariable Long id) {
+    public String deleteProduct(@PathVariable Long id)
+    {
         productService.deleteProduct(id);
-        return "Product deleted successfully";
+        return "Product ID " + id + " deleted successfully";
     }
 }

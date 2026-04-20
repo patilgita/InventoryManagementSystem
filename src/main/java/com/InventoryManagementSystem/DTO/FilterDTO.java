@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class FilterDTO {
 
-    private Long attributeId;  // attribute id (Size, Color)
-    private String value;     // M, Black, 5kg
+    private Long attributeId;
+    private String value;
 
 }

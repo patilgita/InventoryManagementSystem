@@ -33,18 +33,21 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<Payment> getAllPayments() {
+    public List<Payment> getAllPayments()
+    {
         return paymentRepository.findAll();
     }
 
     @Override
-    public Payment getPaymentById(Long id) {
+    public Payment getPaymentById(Long id)
+    {
         return paymentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Payment not found"));
     }
 
     @Override
-    public void deletePayment(Long id) {
+    public void deletePayment(Long id)
+    {
         paymentRepository.deleteById(id);
     }
 }
