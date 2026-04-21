@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins = "https://pjsofttech.in")
+@CrossOrigin(origins = "https://pjsofttech.com")
 @RestController
     public class ProductAttributeValueController {
 
