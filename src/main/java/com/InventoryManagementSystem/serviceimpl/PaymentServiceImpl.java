@@ -1,7 +1,7 @@
 package com.InventoryManagementSystem.serviceimpl;
 
-import com.InventoryManagementSystem.entity.Order;
-import com.InventoryManagementSystem.entity.Payment;
+import com.InventoryManagementSystem.entity.InventoryOrder;
+import com.InventoryManagementSystem.entity.InventoryPayment;
 import com.InventoryManagementSystem.repository.OrderRepository;
 import com.InventoryManagementSystem.repository.PaymentRepository;
 import com.InventoryManagementSystem.service.PaymentService;
@@ -22,9 +22,9 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Payment createPayment(Long orderId, Payment payment) {
+    public InventoryPayment createPayment(Long orderId, InventoryPayment payment) {
 
-        Order order = orderRepository.findById(orderId)
+        InventoryOrder order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
         payment.setOrder(order);
@@ -33,13 +33,13 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<Payment> getAllPayments()
+    public List<InventoryPayment> getAllPayments()
     {
         return paymentRepository.findAll();
     }
 
     @Override
-    public Payment getPaymentById(Long id)
+    public InventoryPayment getPaymentById(Long id)
     {
         return paymentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Payment not found"));

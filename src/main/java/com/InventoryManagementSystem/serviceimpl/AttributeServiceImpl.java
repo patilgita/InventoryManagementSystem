@@ -1,7 +1,7 @@
 package com.InventoryManagementSystem.serviceimpl;
 
-import com.InventoryManagementSystem.entity.Attribute;
-import com.InventoryManagementSystem.entity.ProductType;
+import com.InventoryManagementSystem.entity.InventoryAttribute;
+import com.InventoryManagementSystem.entity.InventoryProductType;
 import com.InventoryManagementSystem.repository.AttributeRepository;
 import com.InventoryManagementSystem.repository.ProductTypeRepository;
 import com.InventoryManagementSystem.service.AttributeService;
@@ -21,7 +21,7 @@ public class AttributeServiceImpl implements AttributeService {
     private ProductTypeRepository productTypeRepository;
 
     @Override
-    public List<Attribute> getAttributesByProductType(Long productTypeId) {
+    public List<InventoryAttribute> getAttributesByProductType(Long productTypeId) {
         return attributeRepository.findAll()
                 .stream()
                 .filter(attribute ->
@@ -31,9 +31,9 @@ public class AttributeServiceImpl implements AttributeService {
     }
 
     @Override
-    public Attribute saveAttribute(Attribute attribute) {
+    public InventoryAttribute saveAttribute(InventoryAttribute attribute) {
 
-        ProductType productType = productTypeRepository
+        InventoryProductType productType = productTypeRepository
                 .findById(attribute.getProductType().getId())
                 .orElseThrow(() -> new RuntimeException("ProductType not found"));
 

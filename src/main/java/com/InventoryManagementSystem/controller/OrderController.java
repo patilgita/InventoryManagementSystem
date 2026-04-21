@@ -1,6 +1,6 @@
 package com.InventoryManagementSystem.controller;
 
-import com.InventoryManagementSystem.entity.Order;
+import com.InventoryManagementSystem.entity.InventoryOrder;
 import com.InventoryManagementSystem.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,19 +15,19 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/createOrder")
-    public Order createOrder(@RequestBody Order order)
+    public InventoryOrder createOrder(@RequestBody InventoryOrder order)
     {
         return orderService.createOrder(order);
     }
 
     @GetMapping("/getAllOrders")
-    public List<Order> getAllOrders()
+    public List<InventoryOrder> getAllOrders()
     {
         return orderService.getAllOrders();
     }
 
     @GetMapping("/getOrderById/{id}")
-    public Order getOrderById(@PathVariable Long id)
+    public InventoryOrder getOrderById(@PathVariable Long id)
     {
         return orderService.getOrderById(id);
     }

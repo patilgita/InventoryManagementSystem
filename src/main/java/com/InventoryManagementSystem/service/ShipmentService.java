@@ -1,16 +1,16 @@
 package com.InventoryManagementSystem.service;
 
-import com.InventoryManagementSystem.entity.Shipment;
+import com.InventoryManagementSystem.entity.InventoryShipment;
 
 import java.util.List;
 
 public interface ShipmentService {
 
-    Shipment saveShipment(Shipment shipment);
+    InventoryShipment saveShipment(InventoryShipment shipment);
 
-    List<Shipment> getAllShipments();
+    List<InventoryShipment> getAllShipments();
 
-    Shipment getShipmentById(Long id);
+    InventoryShipment getShipmentById(Long id);
 
     void deleteShipment(Long id);
 }

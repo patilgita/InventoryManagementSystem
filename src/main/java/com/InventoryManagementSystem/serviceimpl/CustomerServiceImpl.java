@@ -3,7 +3,7 @@ package com.InventoryManagementSystem.serviceimpl;
 import com.InventoryManagementSystem.DTO.CustomerRequestDTO;
 import com.InventoryManagementSystem.DTO.CustomerResponseDTO;
 import com.InventoryManagementSystem.entity.Customer;
-import com.InventoryManagementSystem.entity.Vendor;
+import com.InventoryManagementSystem.entity.InventoryVendor;
 import com.InventoryManagementSystem.Enum.State;
 import com.InventoryManagementSystem.repository.CustomerRepository;
 import com.InventoryManagementSystem.repository.VendorRepository;
@@ -46,7 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
             throw new RuntimeException("Invalid State value");
         }
 
-        Vendor vendor = vendorRepository.findById(dto.getVendorId())
+        InventoryVendor vendor = vendorRepository.findById(dto.getVendorId())
                 .orElseThrow(() -> new RuntimeException("Vendor not found with id: " + dto.getVendorId()));
 
         customer.setVendor(vendor);
@@ -95,7 +95,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         if (dto.getVendorId() != null) {
-            Vendor vendor = vendorRepository.findById(dto.getVendorId())
+            InventoryVendor vendor = vendorRepository.findById(dto.getVendorId())
                     .orElseThrow(() -> new RuntimeException("Vendor not found"));
             customer.setVendor(vendor);
         }

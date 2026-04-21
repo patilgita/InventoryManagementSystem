@@ -1,8 +1,8 @@
 package com.InventoryManagementSystem.serviceimpl;
 
-import com.InventoryManagementSystem.entity.Order;
-import com.InventoryManagementSystem.entity.OrderItem;
-import com.InventoryManagementSystem.entity.Product;
+import com.InventoryManagementSystem.entity.InventoryOrder;
+import com.InventoryManagementSystem.entity.InventoryOrderItem;
+import com.InventoryManagementSystem.entity.InventoryProduct;
 import com.InventoryManagementSystem.repository.OrderItemRepository;
 import com.InventoryManagementSystem.repository.OrderRepository;
 import com.InventoryManagementSystem.repository.ProductRepository;
@@ -27,15 +27,15 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public OrderItem createOrderItem(Long orderId, Long productId, Integer quantity) {
+    public InventoryOrderItem createOrderItem(Long orderId, Long productId, Integer quantity) {
 
-        Order order = orderRepository.findById(orderId)
+        InventoryOrder order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
-        Product product = productRepository.findById(productId)
+        InventoryProduct product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
-        OrderItem item = new OrderItem();
+        InventoryOrderItem item = new InventoryOrderItem();
         item.setOrder(order);
         item.setProduct(product);
         item.setQuantity(quantity);
@@ -44,12 +44,12 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
-    public List<OrderItem> getAllOrderItems() {
+    public List<InventoryOrderItem> getAllOrderItems() {
         return orderItemRepository.findAll();
     }
 
     @Override
-    public OrderItem getOrderItemById(Long id) {
+    public InventoryOrderItem getOrderItemById(Long id) {
         return orderItemRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("OrderItem not found"));
     }

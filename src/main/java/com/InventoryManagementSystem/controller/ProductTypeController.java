@@ -1,6 +1,6 @@
 package com.InventoryManagementSystem.controller;
 
-import com.InventoryManagementSystem.entity.ProductType;
+import com.InventoryManagementSystem.entity.InventoryProductType;
 import com.InventoryManagementSystem.service.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +16,13 @@ public class ProductTypeController {
     private ProductTypeService productTypeService;
 
     @PostMapping("/createProductType")
-    public ProductType createProductType(@RequestBody ProductType productType)
+    public InventoryProductType createProductType(@RequestBody InventoryProductType productType)
     {
         return productTypeService.saveProductType(productType);
     }
 
     @GetMapping("/getAllProductTypes")
-    public List<ProductType> getAllProductTypes()
+    public List<InventoryProductType> getAllProductTypes()
     {
         return productTypeService.getAllProductTypes();
     }
@@ -30,7 +30,7 @@ public class ProductTypeController {
     @GetMapping("/getProductTypeById/{id}")
     public ResponseEntity<?> getProductTypeById(@PathVariable Long id)
     {
-        ProductType pt = productTypeService.getProductTypeById(id);
+        InventoryProductType pt = productTypeService.getProductTypeById(id);
 
         if(pt == null)
         {

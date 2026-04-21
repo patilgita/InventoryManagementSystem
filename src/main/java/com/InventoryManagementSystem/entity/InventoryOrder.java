@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "orders")
-public class Order {
+public class InventoryOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,11 +35,11 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<OrderItem> orderItems;
+    private List<InventoryOrderItem> orderItems;
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Shipment shipment;
+    private InventoryShipment shipment;
 
-    public Order() {}
+    public InventoryOrder() {}
 }

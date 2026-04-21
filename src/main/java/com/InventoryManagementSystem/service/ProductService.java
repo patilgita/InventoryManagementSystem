@@ -1,15 +1,15 @@
 package com.InventoryManagementSystem.service;
 
-import com.InventoryManagementSystem.entity.Product;
+import com.InventoryManagementSystem.entity.InventoryProduct;
 import java.util.List;
 
 public interface ProductService {
 
-    Product saveProduct(Product product);
+    InventoryProduct saveProduct(InventoryProduct product);
 
-    List<Product> getAllProducts();
+    List<InventoryProduct> getAllProducts();
 
-    Product getProductById(Long id);
+    InventoryProduct getProductById(Long id);
 
     void deleteProduct(Long id);
 }

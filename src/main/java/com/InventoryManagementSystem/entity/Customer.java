@@ -31,9 +31,9 @@ public class Customer {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vendor_id")
-    private Vendor vendor;
+    private InventoryVendor vendor;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Order> orders;
+    private List<InventoryOrder> orders;
 }

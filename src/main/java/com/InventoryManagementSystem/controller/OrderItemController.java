@@ -1,6 +1,6 @@
 package com.InventoryManagementSystem.controller;
 
-import com.InventoryManagementSystem.entity.OrderItem;
+import com.InventoryManagementSystem.entity.InventoryOrderItem;
 import com.InventoryManagementSystem.service.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,22 +16,22 @@ public class OrderItemController {
 
 
     @PostMapping("/createOrderItem")
-    public OrderItem createOrderItem(@RequestParam Long orderId,
-                                     @RequestParam Long productId,
-                                     @RequestParam Integer quantity)
+    public InventoryOrderItem createOrderItem(@RequestParam Long orderId,
+                                              @RequestParam Long productId,
+                                              @RequestParam Integer quantity)
     {
         return orderItemService.createOrderItem(orderId, productId, quantity);
     }
 
     @GetMapping("/getAllOrderItems")
-    public List<OrderItem> getAllOrderItems()
+    public List<InventoryOrderItem> getAllOrderItems()
 
     {
         return orderItemService.getAllOrderItems();
     }
 
     @GetMapping("/getOrderItemById/{id}")
-    public OrderItem getOrderItemById(@PathVariable Long id)
+    public InventoryOrderItem getOrderItemById(@PathVariable Long id)
     {
         return orderItemService.getOrderItemById(id);
     }

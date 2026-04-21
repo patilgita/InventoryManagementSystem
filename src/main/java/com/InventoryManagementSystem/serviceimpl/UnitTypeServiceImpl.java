@@ -1,6 +1,6 @@
 package com.InventoryManagementSystem.serviceimpl;
 
-import com.InventoryManagementSystem.entity.UnitType;
+import com.InventoryManagementSystem.entity.InventoryUnitType;
 import com.InventoryManagementSystem.repository.UnitTypeRepository;
 import com.InventoryManagementSystem.service.UnitTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +15,17 @@ public class UnitTypeServiceImpl implements UnitTypeService {
     private UnitTypeRepository unitTypeRepository;
 
     @Override
-    public UnitType saveUnitType(UnitType unitType) {
+    public InventoryUnitType saveUnitType(InventoryUnitType unitType) {
         return unitTypeRepository.save(unitType);
     }
 
     @Override
-    public List<UnitType> getAllUnitTypes() {
+    public List<InventoryUnitType> getAllUnitTypes() {
         return unitTypeRepository.findAll();
     }
 
     @Override
-    public UnitType getUnitTypeById(Long id) {
+    public InventoryUnitType getUnitTypeById(Long id) {
         return unitTypeRepository.findById(id).orElse(null);
     }
 

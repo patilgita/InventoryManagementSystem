@@ -27,23 +27,23 @@ public class ProductServiceImpl implements ProductService {
     private UnitTypeRepository unitTypeRepository;
 
     @Override
-    public Product saveProduct(Product product) {
+    public InventoryProduct saveProduct(InventoryProduct product) {
 
         Long productTypeId = product.getProductType().getId();
         Long brandId = product.getBrand().getId();
         Long vendorId = product.getVendor().getId();
         Long unitTypeId = product.getUnitType().getId();
 
-        ProductType productType = productTypeRepository.findById(productTypeId)
+        InventoryProductType productType = productTypeRepository.findById(productTypeId)
                 .orElseThrow(() -> new RuntimeException("ProductType not found"));
 
-        Brand brand = brandRepository.findById(brandId)
+        InventoryBrand brand = brandRepository.findById(brandId)
                 .orElseThrow(() -> new RuntimeException("Brand not found"));
 
-        Vendor vendor = vendorRepository.findById(vendorId)
+        InventoryVendor vendor = vendorRepository.findById(vendorId)
                 .orElseThrow(() -> new RuntimeException("Vendor not found"));
 
-        UnitType unitType = unitTypeRepository.findById(unitTypeId)
+        InventoryUnitType unitType = unitTypeRepository.findById(unitTypeId)
                 .orElseThrow(() -> new RuntimeException("UnitType not found"));
 
         product.setProductType(productType);
@@ -55,12 +55,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts() {
+    public List<InventoryProduct> getAllProducts() {
         return productRepository.findAll();
     }
 
     @Override
-    public Product getProductById(Long id) {
+    public InventoryProduct getProductById(Long id) {
         return productRepository.findById(id).orElse(null);
     }
 

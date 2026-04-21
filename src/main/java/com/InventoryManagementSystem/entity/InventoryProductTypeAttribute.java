@@ -7,17 +7,18 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "attributes")
-public class Attribute
-{
+@Table(name = "product_type_attributes")
+public class InventoryProductTypeAttribute {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
     @ManyToOne
     @JoinColumn(name = "product_type_id")
-    private ProductType productType;
+    private InventoryProductType productType;
+
+    @ManyToOne
+    @JoinColumn(name = "attribute_id")
+    private InventoryAttribute attribute;
 }

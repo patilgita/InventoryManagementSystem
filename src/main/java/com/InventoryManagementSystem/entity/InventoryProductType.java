@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @Getter
 @Table(name = "product_types")
-public class ProductType {
+public class InventoryProductType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +23,8 @@ public class ProductType {
 
     @OneToMany(mappedBy = "productType", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Product> products;
+    private List<InventoryProduct> products;
 
-    public ProductType() {}
+    public InventoryProductType() {}
 }
 

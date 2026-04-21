@@ -1,8 +1,6 @@
 package com.InventoryManagementSystem.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "products")
-public class Product {
+public class InventoryProduct {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,23 +41,23 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "product_type_id")
-    private ProductType productType;
+    private InventoryProductType productType;
 
     @ManyToOne
-    private Brand brand;
+    private InventoryBrand brand;
 
     @ManyToOne
-    private Vendor vendor;
+    private InventoryVendor vendor;
 
     @ManyToOne
-    private UnitType unitType;
+    private InventoryUnitType unitType;
 
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<ProductAttributeValue> attributes;
+    private List<InventoryProductAttributeValue> attributes;
 
-    public Product() {
+    public InventoryProduct() {
         this.productAddedDate = LocalDate.now();
     }
 }

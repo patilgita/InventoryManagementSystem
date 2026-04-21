@@ -1,16 +1,16 @@
 package com.InventoryManagementSystem.service;
 
-import com.InventoryManagementSystem.entity.UnitType;
+import com.InventoryManagementSystem.entity.InventoryUnitType;
 
 import java.util.List;
 
 public interface UnitTypeService {
 
-    UnitType saveUnitType(UnitType unitType);
+    InventoryUnitType saveUnitType(InventoryUnitType unitType);
 
-    List<UnitType> getAllUnitTypes();
+    List<InventoryUnitType> getAllUnitTypes();
 
-    UnitType getUnitTypeById(Long id);
+    InventoryUnitType getUnitTypeById(Long id);
 
     void deleteUnitType(Long id);
 }

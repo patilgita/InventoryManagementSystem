@@ -1,6 +1,6 @@
 package com.InventoryManagementSystem.serviceimpl;
 
-import com.InventoryManagementSystem.entity.Shipment;
+import com.InventoryManagementSystem.entity.InventoryShipment;
 import com.InventoryManagementSystem.repository.ShipmentRepository;
 import com.InventoryManagementSystem.service.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class ShipmentServiceImpl implements ShipmentService {
     private ShipmentRepository shipmentRepository;
 
     @Override
-    public Shipment saveShipment(Shipment shipment) {
+    public InventoryShipment saveShipment(InventoryShipment shipment) {
 
         if (shipment.getShipmentDate() == null) {
             shipment.setShipmentDate(LocalDate.now());
@@ -26,12 +26,12 @@ public class ShipmentServiceImpl implements ShipmentService {
     }
 
     @Override
-    public List<Shipment> getAllShipments() {
+    public List<InventoryShipment> getAllShipments() {
         return shipmentRepository.findAll();
     }
 
     @Override
-    public Shipment getShipmentById(Long id) {
+    public InventoryShipment getShipmentById(Long id) {
         return shipmentRepository.findById(id).orElse(null);
     }
 

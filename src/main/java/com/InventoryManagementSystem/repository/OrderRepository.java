@@ -1,9 +1,9 @@
 package com.InventoryManagementSystem.repository;
 
-import com.InventoryManagementSystem.entity.Order;
+import com.InventoryManagementSystem.entity.InventoryOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order, Long> {
+public interface OrderRepository extends JpaRepository<InventoryOrder, Long> {
 }

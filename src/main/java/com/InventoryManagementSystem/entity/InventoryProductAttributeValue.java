@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "product_attribute_values")
-public class ProductAttributeValue {
+public class InventoryProductAttributeValue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,11 +16,11 @@ public class ProductAttributeValue {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private Product product;
+    private InventoryProduct product;
 
     @ManyToOne
     @JoinColumn(name = "attribute_id")
-    private Attribute attribute;
+    private InventoryAttribute attribute;
 
     private String value;
 }

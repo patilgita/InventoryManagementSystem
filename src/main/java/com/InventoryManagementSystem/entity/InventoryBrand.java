@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "brands")
-public class Brand {
+public class InventoryBrand {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +22,8 @@ public class Brand {
 
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Product> products;
+    private List<InventoryProduct> products;
 
-    public Brand() {
+    public InventoryBrand() {
     }
 }

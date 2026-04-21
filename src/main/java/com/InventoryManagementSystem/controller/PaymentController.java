@@ -1,6 +1,6 @@
 package com.InventoryManagementSystem.controller;
 
-import com.InventoryManagementSystem.entity.Payment;
+import com.InventoryManagementSystem.entity.InventoryPayment;
 import com.InventoryManagementSystem.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,20 +15,20 @@ public class PaymentController {
     private PaymentService paymentService;
 
     @PostMapping("/createPayment")
-    public Payment createPayment(@RequestParam Long orderId,
-                                 @RequestBody Payment payment)
+    public InventoryPayment createPayment(@RequestParam Long orderId,
+                                          @RequestBody InventoryPayment payment)
     {
         return paymentService.createPayment(orderId, payment);
     }
 
     @GetMapping("/getAllPayments")
-    public List<Payment> getAllPayments()
+    public List<InventoryPayment> getAllPayments()
     {
         return paymentService.getAllPayments();
     }
 
     @GetMapping("/getPaymentById/{id}")
-    public Payment getPaymentById(@PathVariable Long id)
+    public InventoryPayment getPaymentById(@PathVariable Long id)
     {
         return paymentService.getPaymentById(id);
     }

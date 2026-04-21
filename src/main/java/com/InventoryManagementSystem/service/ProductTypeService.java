@@ -1,16 +1,16 @@
 package com.InventoryManagementSystem.service;
 
-import com.InventoryManagementSystem.entity.ProductType;
+import com.InventoryManagementSystem.entity.InventoryProductType;
 
 import java.util.List;
 
 public interface ProductTypeService {
 
-    ProductType saveProductType(ProductType productType);
+    InventoryProductType saveProductType(InventoryProductType productType);
 
-    List<ProductType> getAllProductTypes();
+    List<InventoryProductType> getAllProductTypes();
 
-    ProductType getProductTypeById(Long id);
+    InventoryProductType getProductTypeById(Long id);
 
     void deleteProductType(Long id);
 }

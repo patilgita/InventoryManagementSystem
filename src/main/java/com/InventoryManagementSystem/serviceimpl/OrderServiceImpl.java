@@ -1,9 +1,9 @@
 package com.InventoryManagementSystem.serviceimpl;
 
 import com.InventoryManagementSystem.entity.Customer;
-import com.InventoryManagementSystem.entity.Order;
-import com.InventoryManagementSystem.entity.OrderItem;
-import com.InventoryManagementSystem.entity.Product;
+import com.InventoryManagementSystem.entity.InventoryOrder;
+import com.InventoryManagementSystem.entity.InventoryOrderItem;
+import com.InventoryManagementSystem.entity.InventoryProduct;
 import com.InventoryManagementSystem.repository.CustomerRepository;
 import com.InventoryManagementSystem.repository.OrderRepository;
 import com.InventoryManagementSystem.repository.ProductRepository;
@@ -28,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order createOrder(Order order) {
+    public InventoryOrder createOrder(InventoryOrder order) {
 
 
         Customer customer = customerRepository.findById(order.getCustomer().getId())
@@ -39,9 +39,9 @@ public class OrderServiceImpl implements OrderService {
         double totalAmount = 0.0;
 
 
-        for (OrderItem item : order.getOrderItems()) {
+        for (InventoryOrderItem item : order.getOrderItems()) {
 
-            Product product = productRepository.findById(item.getProduct().getId())
+            InventoryProduct product = productRepository.findById(item.getProduct().getId())
                     .orElseThrow(() -> new RuntimeException("Product not found"));
 
             item.setProduct(product);
@@ -76,12 +76,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getAllOrders() {
+    public List<InventoryOrder> getAllOrders() {
         return orderRepository.findAll();
     }
 
     @Override
-    public Order getOrderById(Long id) {
+    public InventoryOrder getOrderById(Long id) {
         return orderRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
     }

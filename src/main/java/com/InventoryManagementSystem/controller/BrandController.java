@@ -1,6 +1,6 @@
 package com.InventoryManagementSystem.controller;
 
-import com.InventoryManagementSystem.entity.Brand;
+import com.InventoryManagementSystem.entity.InventoryBrand;
 import com.InventoryManagementSystem.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,19 +14,19 @@ public class BrandController {
     private BrandService brandService;
 
     @PostMapping("/createBrand")
-    public Brand createBrand(@RequestBody Brand brand)
+    public InventoryBrand createBrand(@RequestBody InventoryBrand brand)
     {
         return brandService.saveBrand(brand);
     }
 
     @GetMapping("/getAllBrands")
-    public List<Brand> getAllBrands()
+    public List<InventoryBrand> getAllBrands()
     {
         return brandService.getAllBrands();
     }
 
     @GetMapping("/getBrandById/{id}")
-    public Brand getBrandById(@PathVariable Long id)
+    public InventoryBrand getBrandById(@PathVariable Long id)
     {
         return brandService.getBrandById(id);
     }

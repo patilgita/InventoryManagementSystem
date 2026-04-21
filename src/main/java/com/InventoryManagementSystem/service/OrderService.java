@@ -1,15 +1,15 @@
 package com.InventoryManagementSystem.service;
 
-import com.InventoryManagementSystem.entity.Order;
+import com.InventoryManagementSystem.entity.InventoryOrder;
 import java.util.List;
 
 public interface OrderService {
 
-    Order createOrder(Order order);
+    InventoryOrder createOrder(InventoryOrder order);
 
-    List<Order> getAllOrders();
+    List<InventoryOrder> getAllOrders();
 
-    Order getOrderById(Long id);
+    InventoryOrder getOrderById(Long id);
 
     void deleteOrder(Long id);
 }

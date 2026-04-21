@@ -1,6 +1,6 @@
 package com.InventoryManagementSystem.controller;
 
-import com.InventoryManagementSystem.entity.UnitType;
+import com.InventoryManagementSystem.entity.InventoryUnitType;
 import com.InventoryManagementSystem.service.UnitTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,19 +14,19 @@ public class UnitTypeController {
     private UnitTypeService unitTypeService;
 
     @PostMapping("/createUnitType")
-    public UnitType createUnitType(@RequestBody UnitType unitType)
+    public InventoryUnitType createUnitType(@RequestBody InventoryUnitType unitType)
     {
         return unitTypeService.saveUnitType(unitType);
     }
 
     @GetMapping("/getAllUnitTypes")
-    public List<UnitType> getAllUnitTypes()
+    public List<InventoryUnitType> getAllUnitTypes()
     {
         return unitTypeService.getAllUnitTypes();
     }
 
     @GetMapping("/getUnitTypeById/{id}")
-    public UnitType getUnitTypeById(@PathVariable Long id)
+    public InventoryUnitType getUnitTypeById(@PathVariable Long id)
     {
         return unitTypeService.getUnitTypeById(id);
     }

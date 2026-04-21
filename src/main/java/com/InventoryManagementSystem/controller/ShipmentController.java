@@ -1,6 +1,6 @@
 package com.InventoryManagementSystem.controller;
 
-import com.InventoryManagementSystem.entity.Shipment;
+import com.InventoryManagementSystem.entity.InventoryShipment;
 import com.InventoryManagementSystem.service.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,19 +16,19 @@ public class ShipmentController {
 
 
     @PostMapping("/createShipment")
-    public Shipment createShipment(@RequestBody Shipment shipment)
+    public InventoryShipment createShipment(@RequestBody InventoryShipment shipment)
     {
         return shipmentService.saveShipment(shipment);
     }
 
     @GetMapping("/getAllShipments")
-    public List<Shipment> getAllShipments()
+    public List<InventoryShipment> getAllShipments()
     {
         return shipmentService.getAllShipments();
     }
 
     @GetMapping("/getShipmentById/{id}")
-    public Shipment getShipmentById(@PathVariable Long id)
+    public InventoryShipment getShipmentById(@PathVariable Long id)
     {
         return shipmentService.getShipmentById(id);
     }

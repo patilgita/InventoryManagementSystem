@@ -1,13 +1,13 @@
-package com.InventoryManagementSystem.service; import com.InventoryManagementSystem.entity.Vendor; import java.util.List;
+package com.InventoryManagementSystem.service; import com.InventoryManagementSystem.entity.InventoryVendor; import java.util.List;
 public interface VendorService {
 
-    Vendor saveVendor(Vendor vendor);
+    InventoryVendor saveVendor(InventoryVendor vendor);
 
-    List<Vendor> getAllVendors();
+    List<InventoryVendor> getAllVendors();
 
-    Vendor getVendorById(Long id);
+    InventoryVendor getVendorById(Long id);
 
-    Vendor updateVendor(Long id, Vendor vendor);
+    InventoryVendor updateVendor(Long id, InventoryVendor vendor);
 
     void deleteVendor(Long id);
 }

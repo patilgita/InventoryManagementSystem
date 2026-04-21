@@ -1,9 +1,9 @@
 package com.InventoryManagementSystem.serviceimpl;
 
 import com.InventoryManagementSystem.DTO.ProductAttributeValueResponseDTO;
-import com.InventoryManagementSystem.entity.Attribute;
-import com.InventoryManagementSystem.entity.Product;
-import com.InventoryManagementSystem.entity.ProductAttributeValue;
+import com.InventoryManagementSystem.entity.InventoryAttribute;
+import com.InventoryManagementSystem.entity.InventoryProduct;
+import com.InventoryManagementSystem.entity.InventoryProductAttributeValue;
 import com.InventoryManagementSystem.repository.AttributeRepository;
 import com.InventoryManagementSystem.repository.ProductAttributeValueRepository;
 import com.InventoryManagementSystem.repository.ProductRepository;
@@ -24,20 +24,20 @@ public class ProductAttributeValueServiceImpl implements ProductAttributeValueSe
     private AttributeRepository attributeRepository;
 
     @Override
-    public ProductAttributeValueResponseDTO save(ProductAttributeValue pav) {
+    public ProductAttributeValueResponseDTO save(InventoryProductAttributeValue pav) {
 
-        Product product = productRepository.findById(
+        InventoryProduct product = productRepository.findById(
                 pav.getProduct().getId()
         ).orElseThrow(() -> new RuntimeException("Product not found"));
 
-        Attribute attribute = attributeRepository.findById(
+        InventoryAttribute attribute = attributeRepository.findById(
                 pav.getAttribute().getId()
         ).orElseThrow(() -> new RuntimeException("Attribute not found"));
 
         pav.setProduct(product);
         pav.setAttribute(attribute);
 
-        ProductAttributeValue saved = repository.save(pav);
+        InventoryProductAttributeValue saved = repository.save(pav);
 
         return new ProductAttributeValueResponseDTO(
                 saved.getId(),

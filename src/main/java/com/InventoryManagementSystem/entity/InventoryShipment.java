@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Table(name = "shipments")
-public class Shipment {
+public class InventoryShipment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,9 +41,9 @@ public class Shipment {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id", nullable = false)
     @JsonBackReference
-    private Order order;
+    private InventoryOrder order;
 
-    public Shipment() {
+    public InventoryShipment() {
         this.shipmentDate = LocalDate.now(); // auto date
     }
 }

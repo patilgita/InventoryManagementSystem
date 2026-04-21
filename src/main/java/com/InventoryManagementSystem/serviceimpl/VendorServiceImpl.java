@@ -1,6 +1,6 @@
 package com.InventoryManagementSystem.serviceimpl;
 
-import com.InventoryManagementSystem.entity.Vendor;
+import com.InventoryManagementSystem.entity.InventoryVendor;
 import com.InventoryManagementSystem.repository.VendorRepository;
 import com.InventoryManagementSystem.service.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,24 +15,24 @@ public class VendorServiceImpl implements VendorService {
     private VendorRepository vendorRepository;
 
     @Override
-    public Vendor saveVendor(Vendor vendor) {
+    public InventoryVendor saveVendor(InventoryVendor vendor) {
         return vendorRepository.save(vendor);
     }
 
     @Override
-    public List<Vendor> getAllVendors() {
+    public List<InventoryVendor> getAllVendors() {
         return vendorRepository.findAll();
     }
 
     @Override
-    public Vendor getVendorById(Long id) {
+    public InventoryVendor getVendorById(Long id) {
         return vendorRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Vendor updateVendor(Long id, Vendor vendor) {
+    public InventoryVendor updateVendor(Long id, InventoryVendor vendor) {
 
-        Vendor existing = vendorRepository.findById(id)
+        InventoryVendor existing = vendorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vendor Not Found: " + id));
 
 

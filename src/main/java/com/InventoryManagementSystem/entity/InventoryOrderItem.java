@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "order_items")
-public class OrderItem {
+public class InventoryOrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,11 +18,11 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "order_id")
     @JsonBackReference
-    private Order order;
+    private InventoryOrder order;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private Product product;
+    private InventoryProduct product;
 
     private Integer quantity;
 
@@ -30,7 +30,7 @@ public class OrderItem {
     private Double gstAmount;   // total GST
     private Double totalPrice;  // final total
 
-    public OrderItem() {}
+    public InventoryOrderItem() {}
 
     @PrePersist
     @PreUpdate

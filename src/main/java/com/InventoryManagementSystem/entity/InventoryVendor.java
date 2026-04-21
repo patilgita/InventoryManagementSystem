@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @Getter
 @Table(name = "vendors")
-public class Vendor {
+public class InventoryVendor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +42,7 @@ public class Vendor {
 
     @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Product> products;
+    private List<InventoryProduct> products;
 
-    public Vendor() {}
+    public InventoryVendor() {}
 }

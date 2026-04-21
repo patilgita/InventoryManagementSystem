@@ -1,6 +1,6 @@
 package com.InventoryManagementSystem.controller;
 
-import com.InventoryManagementSystem.entity.Vendor;
+import com.InventoryManagementSystem.entity.InventoryVendor;
 import com.InventoryManagementSystem.service.VendorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,25 +15,25 @@ public class VendorController {
     private VendorService vendorService;
 
     @PostMapping("/createVendor")
-    public Vendor createVendor(@RequestBody Vendor vendor)
+    public InventoryVendor createVendor(@RequestBody InventoryVendor vendor)
     {
         return vendorService.saveVendor(vendor);
     }
 
     @GetMapping("/getallVendor")
-    public List<Vendor> getAllVendors()
+    public List<InventoryVendor> getAllVendors()
     {
         return vendorService.getAllVendors();
     }
 
     @GetMapping("/getbyIdVendor/{id}")
-    public Vendor getVendorById(@PathVariable Long id)
+    public InventoryVendor getVendorById(@PathVariable Long id)
     {
         return vendorService.getVendorById(id);
     }
 
     @PutMapping("/updateVendor/{id}")
-    public Vendor updateVendor(@PathVariable Long id, @RequestBody Vendor vendor)
+    public InventoryVendor updateVendor(@PathVariable Long id, @RequestBody InventoryVendor vendor)
     {
         return vendorService.updateVendor(id, vendor);
     }

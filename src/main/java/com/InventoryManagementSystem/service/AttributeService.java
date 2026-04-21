@@ -1,11 +1,11 @@
 package com.InventoryManagementSystem.service;
 
-import com.InventoryManagementSystem.entity.Attribute;
+import com.InventoryManagementSystem.entity.InventoryAttribute;
 import java.util.List;
 
 public interface AttributeService {
 
-    List<Attribute> getAttributesByProductType(Long productTypeId);
+    List<InventoryAttribute> getAttributesByProductType(Long productTypeId);
 
-    Attribute saveAttribute(Attribute attribute);
+    InventoryAttribute saveAttribute(InventoryAttribute attribute);
 }

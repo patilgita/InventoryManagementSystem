@@ -1,6 +1,6 @@
 package com.InventoryManagementSystem.controller;
 
-import com.InventoryManagementSystem.entity.Attribute;
+import com.InventoryManagementSystem.entity.InventoryAttribute;
 import com.InventoryManagementSystem.service.AttributeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +16,14 @@ public class AttributeController
     private AttributeService service;
 
     @PostMapping("/createAttribute")
-    public Attribute createAttribute(@RequestBody Attribute attribute)
+    public InventoryAttribute createAttribute(@RequestBody InventoryAttribute attribute)
     {
         return service.saveAttribute(attribute);
     }
 
 
     @GetMapping("/by-product-type/{id}")
-    public List<Attribute> getByProductType(@PathVariable Long id)
+    public List<InventoryAttribute> getByProductType(@PathVariable Long id)
     {
         return service.getAttributesByProductType(id);
     }

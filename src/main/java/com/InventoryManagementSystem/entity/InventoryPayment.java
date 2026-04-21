@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Table(name = "payments")
-public class Payment {
+public class InventoryPayment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,9 +32,9 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
     @JsonBackReference
-    private Order order;
+    private InventoryOrder order;
 
-    public Payment()
+    public InventoryPayment()
     {
         this.paymentDate = LocalDate.now();
     }

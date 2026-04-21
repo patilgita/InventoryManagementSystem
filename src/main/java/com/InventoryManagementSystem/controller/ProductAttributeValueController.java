@@ -1,7 +1,7 @@
 package com.InventoryManagementSystem.controller;
 
 import com.InventoryManagementSystem.DTO.ProductAttributeValueResponseDTO;
-import com.InventoryManagementSystem.entity.ProductAttributeValue;
+import com.InventoryManagementSystem.entity.InventoryProductAttributeValue;
 import com.InventoryManagementSystem.service.ProductAttributeValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
     @PostMapping("/createProductAttributeValue")
     public ProductAttributeValueResponseDTO create(
-            @RequestBody ProductAttributeValue value) {
+            @RequestBody InventoryProductAttributeValue value) {
         return service.save(value);
     }
 }
