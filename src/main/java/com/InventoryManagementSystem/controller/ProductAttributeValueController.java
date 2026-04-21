@@ -4,10 +4,12 @@ import com.InventoryManagementSystem.DTO.ProductAttributeValueResponseDTO;
 import com.InventoryManagementSystem.entity.ProductAttributeValue;
 import com.InventoryManagementSystem.service.ProductAttributeValueService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin(origins = "https://pjsofttech.in")
 @RestController
     public class ProductAttributeValueController {
 
