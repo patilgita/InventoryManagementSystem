@@ -3,6 +3,7 @@ package com.InventoryManagementSystem.controller;
 import com.InventoryManagementSystem.entity.ProductType;
 import com.InventoryManagementSystem.service.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,9 +28,16 @@ public class ProductTypeController {
     }
 
     @GetMapping("/getProductTypeById/{id}")
-    public ProductType getProductTypeById(@PathVariable Long id)
+    public ResponseEntity<?> getProductTypeById(@PathVariable Long id)
     {
-        return productTypeService.getProductTypeById(id);
+        ProductType pt = productTypeService.getProductTypeById(id);
+
+        if(pt == null)
+        {
+            return ResponseEntity.status(404).body("Product Type Not Found");
+        }
+
+        return ResponseEntity.ok(pt);
     }
 
     @DeleteMapping("/deleteProductType/{id}")
