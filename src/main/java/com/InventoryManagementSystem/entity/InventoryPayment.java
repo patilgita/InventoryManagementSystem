@@ -17,16 +17,21 @@ public class InventoryPayment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "amount")
     private Double amount;
 
+    @Column(name = "payment_date")
     private LocalDate paymentDate;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "payment_method")
     private PaymentMethod paymentMethod;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status")
     private PaymentStatus paymentStatus;
 
     @ManyToOne
@@ -34,8 +39,7 @@ public class InventoryPayment {
     @JsonBackReference
     private InventoryOrder order;
 
-    public InventoryPayment()
-    {
+    public InventoryPayment() {
         this.paymentDate = LocalDate.now();
     }
 }
