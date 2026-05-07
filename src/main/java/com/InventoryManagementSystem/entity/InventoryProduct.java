@@ -32,11 +32,21 @@ public class InventoryProduct {
     @Transient
     private Boolean available;
 
+    @Transient
+    private Double totalAmount;
+
     @PostLoad
     @PostPersist
     @PostUpdate
-    public void updateAvailability() {
+    public void calculateTotal() {
+
         this.available = (this.stock != null && this.stock > 0);
+
+        if (this.stock != null && this.price != null) {
+            this.totalAmount = this.stock * this.price;
+        } else {
+            this.totalAmount = 0.0;
+        }
     }
 
     @ManyToOne
@@ -51,7 +61,6 @@ public class InventoryProduct {
 
     @ManyToOne
     private InventoryUnitType unitType;
-
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @JsonIgnore
